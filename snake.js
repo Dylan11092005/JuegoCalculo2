@@ -58,8 +58,8 @@ class Snake {
 
   shrink(amount = 1) {
     for (let i = 0; i < amount; i++) {
-      // mínimo 2 segmentos para que el juego siga
-      if (this.body.length > 2) {
+      // mínimo 1 segmento (solo cabeza)
+      if (this.body.length > 1) {
         this.body.shift(); // quita cola
       }
     }
@@ -88,11 +88,13 @@ class Snake {
     if (wy < 0) wy = rows - 1;
     else if (wy >= rows) wy = 0;
 
-    // cuerpo
-    for (const p of this.body) {
-      if (p.x === wx && p.y === wy) {
-        this.isDead = true;
-        return;
+    // cuerpo (solo muere si tamaño > 3)
+    if (this.length > 3) {
+      for (const p of this.body) {
+        if (p.x === wx && p.y === wy) {
+          this.isDead = true;
+          return;
+        }
       }
     }
 
@@ -111,6 +113,11 @@ class Snake {
     this.body.shift();
 
     this.length = this.body.length;
+
+    // Game over si solo queda la cabeza
+    if (this.length <= 1) {
+      this.isDead = true;
+    }
   }
 
   show() {

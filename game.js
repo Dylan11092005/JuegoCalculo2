@@ -1,9 +1,11 @@
 let GAME_MODE = "START"; // "START" | "PLAY" | "QUIZ" | "GAME_OVER"
 
-let snake, food;
+let snake, food, heart;
 let audioBg, audioEat;
 let audioUnlocked = false;
 let audioEatTimer = null;
+let heartSpawnTimer = 0;
+let heartSpawnInterval = 0; // Intervalo actual para aparecer el corazón
 
 // SFX helpers en scope global (usados desde eatFood y handlers)
 function playEatSfx(ms = 800) {
@@ -81,6 +83,15 @@ function setup() {
     showFatal(
       "No cargaron Snake o Food.",
       "Revisa que existan snake.js y food.js y estén bien escritos en index.html"
+    );
+    noLoop();
+    return;
+  }
+
+  if (typeof Heart !== "function") {
+    showFatal(
+      "No cargó Heart.",
+      "Revisa que exista heart.js en index.html"
     );
     noLoop();
     return;
@@ -180,12 +191,19 @@ function draw() {
     const scoreEl = document.getElementById("scoreUI");
     if (scoreEl) scoreEl.textContent = String(snake?.length ?? 0);
 
-    // Dibujar corazones
-    drawHearts();
+    // Actualizar UI de vidas
+    updateHeartsUI();
 
     // Si por algo snake/food no existen, intenta crearlos
     if (!snake || !food) {
       newGame(true);
+    }
+
+    // Inicializar corazón si no existe
+    if (!heart) {
+      heart = new Heart(_CELL);
+      heartSpawnTimer = 0;
+      heartSpawnInterval = Math.random() * 10 + 20; // 20-30 segundos (en frames, con velocidad)
     }
 
     // START: congelado, esperando Play
@@ -220,8 +238,28 @@ function draw() {
         eatFood();
         return;
       }
+
+      // Lógica del corazón
+      heartSpawnTimer++;
+      const heartSpawnFrames = Math.floor(heartSpawnInterval * _SNAKE_SPEED);
+      if (heartSpawnTimer >= heartSpawnFrames && heart.gx === null) {
+        heart.relocate(getCols(), getRows(), snake);
+      }
+
+      // Comer corazón
+      const h = snake.head();
+      if (heart.gx !== null && heart.gy !== null && h.x === heart.gx && h.y === heart.gy) {
+        if (lives < MAX_LIVES) {
+          lives++;
+        }
+        heart.gx = null;
+        heart.gy = null;
+        heartSpawnTimer = 0;
+        heartSpawnInterval = Math.random() * 10 + 20; // Nuevo intervalo aleatorio
+      }
     }
 
+    heart.show();
     food.show();
     snake.show();
 
@@ -277,8 +315,11 @@ function updateHeartsUI() {
 function newGame() {
   snake = new Snake(_CELL);
   food = new Food(_CELL);
+  heart = new Heart(_CELL);
   food.relocateAvoidSnake(snake, getCols(), getRows());
   lives = MAX_LIVES;
+  heartSpawnTimer = 0;
+  heartSpawnInterval = Math.random() * 10 + 20;
   GAME_MODE = "PLAY";
 
   // por si antes se detuvo
@@ -320,8 +361,9 @@ function eatFood() {
       snake.growAfterEat();
     } else {
 
-      // ❌ castigo: perder una vida
+      // ❌ castigo: perder una vida y reducir serpiente
       lives--;
+      snake.shrink();
       if (lives <= 0) {
         // Game over por falta de vidas
 
