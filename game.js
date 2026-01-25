@@ -320,8 +320,9 @@ function eatFood() {
       snake.growAfterEat();
     } else {
 
-      // ❌ castigo: perder una vida
+      // ❌ castigo: perder una vida y reducir serpiente
       lives--;
+      snake.shrink();
       if (lives <= 0) {
         // Game over por falta de vidas
 

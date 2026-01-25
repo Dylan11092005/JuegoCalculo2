@@ -88,11 +88,13 @@ class Snake {
     if (wy < 0) wy = rows - 1;
     else if (wy >= rows) wy = 0;
 
-    // cuerpo
-    for (const p of this.body) {
-      if (p.x === wx && p.y === wy) {
-        this.isDead = true;
-        return;
+    // cuerpo (solo muere si tamaño > 3)
+    if (this.length > 3) {
+      for (const p of this.body) {
+        if (p.x === wx && p.y === wy) {
+          this.isDead = true;
+          return;
+        }
       }
     }
 
