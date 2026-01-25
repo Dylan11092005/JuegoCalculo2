@@ -17,6 +17,10 @@ class Snake {
     // Comer → abre quiz; solo crecerá si acierta
     this.justAte = false;
     this.lastTail = null;
+
+    // Cargar imágenes
+    this.imgCabeza = loadImage('img/cabeza.png');
+    this.imgCuerpo = loadImage('img/cuerpo.png');
   }
 
   head() { return this.body[this.body.length - 1]; }
@@ -111,40 +115,36 @@ class Snake {
 
   show() {
     const S = this.CELL;
-    noStroke();
 
-    // cuerpo
+    // Dibujar cuerpo de atrás hacia adelante
     for (let i = 0; i < this.body.length; i++) {
       const p = this.body[i];
-      const px = p.x * S, py = p.y * S;
-      fill(i === this.body.length - 1 ? color(70, 160, 70) : color(78, 168, 74));
-      rect(px + 2, py + 2, S - 4, S - 4, 14);
+      const px = p.x * S;
+      const py = p.y * S;
+      const isHead = i === this.body.length - 1;
+      
+      if (isHead) {
+        // Dibujar cabeza con imagen
+        push();
+        translate(px + S / 2, py + S / 2);
+        rotate(this.getHeadRotation());
+        image(this.imgCabeza, -S / 2, -S / 2, S, S);
+        pop();
+      } else {
+        // Dibujar cuerpo con imagen
+        image(this.imgCuerpo, px, py, S, S);
+      }
     }
-
-    // ojos
-    const h = this.head();
-    drawEyes(h.x * S, h.y * S, S, this.dir);
   }
+
+getHeadRotation() {
+  if (this.dir.y === 1)  return PI;        // Frente
+  if (this.dir.x === 1)  return PI / 2;    // Derecha
+  if (this.dir.x === -1) return -PI / 2;   // Izquierda
+  if (this.dir.y === -1) return 0;         // Atrás
+  return 0;
 }
 
-function drawEyes(hx, hy, s, dir) {
-  const cx = hx + s / 2, cy = hy + s / 2;
 
-  let dx = Math.sign(dir.x), dy = Math.sign(dir.y);
-  if (dx === 0 && dy === 0) { dx = 1; dy = 0; }
 
-  const forward = 6, side = 5;
-  const fx = dx * forward, fy = dy * forward;
-  const px = -dy * side, py = dx * side;
-
-  const e1x = cx + fx + px, e1y = cy + fy + py;
-  const e2x = cx + fx - px, e2y = cy + fy - py;
-
-  fill(255);
-  circle(e1x, e1y, 9);
-  circle(e2x, e2y, 9);
-
-  fill(30, 60, 120);
-  circle(e1x + dx * 2, e1y + dy * 2, 4);
-  circle(e2x + dx * 2, e2y + dy * 2, 4);
 }

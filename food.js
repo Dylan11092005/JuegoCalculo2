@@ -3,6 +3,7 @@ class Food {
     this.CELL = cell;
     this.gx = 0;
     this.gy = 0;
+    this.image = loadImage('img/cerebro.png');
   }
 
   // Coloca la comida en un lugar que NO choque con la serpiente
@@ -24,42 +25,39 @@ class Food {
   }
 
   // Dibuja la manzana estilo Google Snake
-  show() {
-    const S = this.CELL;
-    const x = this.gx * S;
-    const y = this.gy * S;
+ show() {
+  const S = this.CELL;
+  const x = this.gx * S;
+  const y = this.gy * S;
+  const cx = x + S / 2;
+  const cy = y + S / 2;
 
-    // sombra
-    noStroke();
-    fill(0, 0, 0, 30);
-    circle(x + S / 2 + 2, y + S / 2 + 2, S * 0.7);
+  // sombra
+  noStroke();
+  fill(0, 0, 0, 30);
+  ellipse(cx + 2, cy + 2, S * 0.75, S * 0.6);
 
-    // manzana
-    fill(231, 76, 60);
-    circle(x + S / 2, y + S / 2, S * 0.7);
+  // base del cerebro
+  fill(233, 150, 170);
+  ellipse(cx, cy, S * 0.75, S * 0.6);
 
-    // brillo
-    fill(255, 255, 255, 160);
-    circle(x + S / 2 - 4, y + S / 2 - 6, S * 0.2);
+  // hemisferios
+  ellipse(cx - 6, cy, S * 0.38, S * 0.5);
+  ellipse(cx + 6, cy, S * 0.38, S * 0.5);
 
-    // tallo
-    stroke(92, 64, 51);
-    strokeWeight(3);
-    line(
-      x + S / 2,
-      y + S / 2 - 10,
-      x + S / 2 + 2,
-      y + S / 2 - 16
-    );
+  // pliegues (conocimiento 😏)
+  stroke(200, 110, 130);
+  strokeWeight(1.5);
+  noFill();
 
-    // hoja
-    noStroke();
-    fill(46, 204, 113);
-    ellipse(
-      x + S / 2 + 7,
-      y + S / 2 - 14,
-      10,
-      6
-    );
-  }
+  arc(cx - 6, cy, S * 0.3, S * 0.35, -PI / 3, PI / 2);
+  arc(cx + 6, cy, S * 0.3, S * 0.35, -PI / 6, PI / 1.5);
+  arc(cx, cy + 3, S * 0.5, S * 0.25, 0, PI);
+
+  // brillo
+  noStroke();
+  fill(255, 255, 255, 90);
+  ellipse(cx - 8, cy - 6, S * 0.15, S * 0.12);
+}
+
 }
