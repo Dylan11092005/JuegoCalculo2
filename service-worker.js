@@ -10,6 +10,8 @@ const ASSETS_TO_CACHE = [
   "./snake.js",
   "./food.js",
   "./quiz.js",
+  "./audio/Catan.mp3",
+  "./audio/mario.mp3",
   "./icons/icon-192.png",
   "./icons/icon-512.png"
 ];

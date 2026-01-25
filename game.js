@@ -1,6 +1,33 @@
 let GAME_MODE = "START"; // "START" | "PLAY" | "QUIZ" | "GAME_OVER"
 
 let snake, food;
+let audioBg, audioEat;
+let audioUnlocked = false;
+let audioEatTimer = null;
+
+// SFX helpers en scope global (usados desde eatFood y handlers)
+function playEatSfx(ms = 800) {
+  if (!audioEat) return;
+  try {
+    if (audioEatTimer) { clearTimeout(audioEatTimer); audioEatTimer = null; }
+    audioEat.currentTime = 0;
+    audioEat.play().catch(()=>{});
+    audioEatTimer = setTimeout(() => {
+      try { audioEat.pause(); audioEat.currentTime = 0; } catch(e){}
+      audioEatTimer = null;
+    }, ms);
+  } catch (e) {}
+}
+
+// Note: `golpe2` / audioWrong removed per user request.
+
+function _clearSfxTimers() {
+  try {
+    if (audioEatTimer) { clearTimeout(audioEatTimer); audioEatTimer = null; }
+    if (audioEat) { audioEat.pause(); audioEat.currentTime = 0; }
+    // audioWrong removed
+  } catch (e) {}
+}
 
 const _CELL = (typeof CELL !== "undefined") ? CELL : 28;
 const _SNAKE_SPEED = (typeof SNAKE_SPEED !== "undefined") ? SNAKE_SPEED : 6;
@@ -22,6 +49,32 @@ function setup() {
   // Cargar imágenes de corazones
   imgHeartFull = loadImage('img/corazonLleno.png');
   imgHeartEmpty = loadImage('img/corazonVacio.png');
+
+  // Cargar audios (el usuario añadió audio/Catan.mp3 y audio/mario.mp3)
+  try {
+    audioBg = new Audio('audio/Catan.mp3');
+    audioBg.loop = true;
+    audioBg.volume = 0.10; // más bajo para la música de fondo
+
+    audioEat = new Audio('audio/mario.mp3');
+    audioEat.volume = 0.10; // sonido de comer más suave
+  } catch (e) {}
+
+  // Intento de "desbloquear" audio en el primer input del usuario
+  const _unlockAudio = () => {
+    if (audioUnlocked) return;
+    audioUnlocked = true;
+    [audioBg, audioEat].forEach(a => {
+      if (!a) return;
+      a.play().then(() => { a.pause(); a.currentTime = 0; }).catch(() => {});
+    });
+    window.removeEventListener('touchstart', _unlockAudio);
+    window.removeEventListener('mousedown', _unlockAudio);
+    window.removeEventListener('keydown', _unlockAudio);
+  };
+  window.addEventListener('touchstart', _unlockAudio, { passive: true });
+  window.addEventListener('mousedown', _unlockAudio);
+  window.addEventListener('keydown', _unlockAudio);
 
   // Si no cargó snake.js/food.js, mostramos el error
   if (typeof Snake !== "function" || typeof Food !== "function") {
@@ -52,7 +105,11 @@ function setupStartUI() {
 
     overlay.style.display = "none";
     GAME_MODE = "PLAY";
+    _maybePlayBg();
   };
+  
+  // Reproducir música de fondo al comenzar (si está desbloqueada)
+  const _maybePlayBg = () => { if (audioBg) audioBg.play().catch(()=>{}); };
 
   // PC
   btn.onclick = startHandler;
@@ -77,7 +134,9 @@ function setupGameOverUI() {
 
     hideGameOver();
 
-    // Reinicia y vuelve a START (pantalla inicial)
+    // Detener música y reinicia (vuelve a START)
+    if (audioBg) { try { audioBg.pause(); audioBg.currentTime = 0; } catch(e){} }
+    _clearSfxTimers();
     newGame(true);
     const startOverlay = document.getElementById("startOverlay");
     if (startOverlay) startOverlay.style.display = "grid";
@@ -228,6 +287,8 @@ function newGame() {
 
 function showGameOver() {
   GAME_MODE = "GAME_OVER";
+  if (audioBg) { try { audioBg.pause(); audioBg.currentTime = 0; } catch(e){} }
+  _clearSfxTimers();
   const overlay = document.getElementById("gameOverOverlay");
   const finalScore = document.getElementById("finalScore");
   if (finalScore) finalScore.textContent = `Score: ${snake?.length ?? 0}`;
@@ -241,6 +302,11 @@ function hideGameOver() {
 
 function eatFood() {
   GAME_MODE = "QUIZ";
+  // pausa la música de fondo durante el quiz
+  if (audioBg) { try { audioBg.pause(); } catch(e){} }
+
+  // efecto al comer (solo corta duración)
+  playEatSfx(800);
 
   if (typeof startQuiz !== "function") {
     food.relocateAvoidSnake(snake, getCols(), getRows());
@@ -254,6 +320,9 @@ function eatFood() {
       snake.growAfterEat();
     } else {
 
+      // sonido de fallo (solo corta duración)
+      playWrongSfx(800);
+
       // ❌ castigo: perder una vida
       lives--;
       if (lives <= 0) {
@@ -265,8 +334,10 @@ function eatFood() {
     }
 
     // nueva comida siempre
-    food.relocateAvoidSnake(snake, getCols(), getRows());
     GAME_MODE = "PLAY";
+    // volver a reproducir música de fondo si corresponde
+    if (audioBg) { try { audioBg.currentTime = 0; audioBg.play().catch(()=>{}); } catch(e){} }
+    food.relocateAvoidSnake(snake, getCols(), getRows());
   });
 }
 
