@@ -57,14 +57,14 @@ class Snake {
   }
 
   shrink(amount = 1) {
-  for (let i = 0; i < amount; i++) {
-    // mínimo 2 segmentos para que el juego siga
-    if (this.body.length > 2) {
-      this.body.shift(); // quita cola
+    for (let i = 0; i < amount; i++) {
+      // mínimo 2 segmentos para que el juego siga
+      if (this.body.length > 2) {
+        this.body.shift(); // quita cola
+      }
     }
+    this.length = this.body.length;
   }
-  this.length = this.body.length;
-}
 
 
   update(cols, rows, food) {
@@ -114,36 +114,55 @@ class Snake {
   }
 
   show() {
-    const S = this.CELL;
+  const S = this.CELL;
 
-    // Dibujar cuerpo de atrás hacia adelante
-    for (let i = 0; i < this.body.length; i++) {
-      const p = this.body[i];
-      const px = p.x * S;
-      const py = p.y * S;
-      const isHead = i === this.body.length - 1;
-      
-      if (isHead) {
-        // Dibujar cabeza con imagen
-        push();
-        translate(px + S / 2, py + S / 2);
-        rotate(this.getHeadRotation());
-        image(this.imgCabeza, -S / 2, -S / 2, S, S);
-        pop();
-      } else {
-        // Dibujar cuerpo con imagen
-        image(this.imgCuerpo, px, py, S, S);
+  for (let i = 0; i < this.body.length; i++) {
+    const p = this.body[i];
+    const px = p.x * S;
+    const py = p.y * S;
+    const isHead = i === this.body.length - 1;
+
+    if (isHead) {
+      // CABEZA
+      push();
+      translate(px + S / 2, py + S / 2);
+      rotate(this.getHeadRotation());
+      image(this.imgCabeza, -S / 2, -S / 2, S, S);
+      pop();
+    } else {
+      // CUERPO
+      push();
+      translate(px + S / 2, py + S / 2);
+
+      const prev = this.body[i - 1];
+      const next = this.body[i + 1];
+
+      let angle = 0; // sprite HORIZONTAL por defecto
+
+      // Si el cuerpo va en vertical → rotar
+      if (
+        (prev && prev.y !== p.y) ||
+        (next && next.y !== p.y)
+      ) {
+        angle = PI / 2;
       }
+
+      rotate(angle);
+      image(this.imgCuerpo, -S / 2, -S / 2, S, S);
+      pop();
     }
   }
-
-getHeadRotation() {
-  if (this.dir.y === 1)  return 0;        // Frente
-  if (this.dir.x === 1)  return -PI / 2;  // Derecha
-  if (this.dir.x === -1) return PI / 2;   // Izquierda
-  if (this.dir.y === -1) return PI;       // Atrás
-  return 0;
 }
+
+
+
+  getHeadRotation() {
+    if (this.dir.y === 1) return 0;        // Frente
+    if (this.dir.x === 1) return -PI / 2;  // Derecha
+    if (this.dir.x === -1) return PI / 2;   // Izquierda
+    if (this.dir.y === -1) return PI;       // Atrás
+    return 0;
+  }
 
 
 
