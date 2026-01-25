@@ -191,8 +191,8 @@ function draw() {
     const scoreEl = document.getElementById("scoreUI");
     if (scoreEl) scoreEl.textContent = String(snake?.length ?? 0);
 
-    // Dibujar corazones
-    drawHearts();
+    // Actualizar UI de vidas
+    updateHeartsUI();
 
     // Si por algo snake/food no existen, intenta crearlos
     if (!snake || !food) {
