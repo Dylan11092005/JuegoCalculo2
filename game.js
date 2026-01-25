@@ -8,11 +8,20 @@ const _SNAKE_SPEED = (typeof SNAKE_SPEED !== "undefined") ? SNAKE_SPEED : 6;
 let touchStartX = null;
 let touchStartY = null;
 
+// Sistema de vidas
+let lives = 5;
+const MAX_LIVES = 5;
+let imgHeartFull, imgHeartEmpty;
+
 function setup() {
   const dims = getCanvasDims();
   const cnv = createCanvas(dims.w, dims.h);
   cnv.parent("canvasWrap");
   noSmooth();
+
+  // Cargar imágenes de corazones
+  imgHeartFull = loadImage('img/corazonLleno.png');
+  imgHeartEmpty = loadImage('img/corazonVacio.png');
 
   // Si no cargó snake.js/food.js, mostramos el error
   if (typeof Snake !== "function" || typeof Food !== "function") {
@@ -112,6 +121,9 @@ function draw() {
     const scoreEl = document.getElementById("scoreUI");
     if (scoreEl) scoreEl.textContent = String(snake?.length ?? 0);
 
+    // Dibujar corazones
+    drawHearts();
+
     // Si por algo snake/food no existen, intenta crearlos
     if (!snake || !food) {
       newGame(true);
@@ -175,13 +187,40 @@ function drawBoard() {
   }
 }
 
-// freeze = true -> no cambia a PLAY (sirve para START y reinicios)
-function newGame(freeze = false) {
+
+function drawHearts() {
+  const heartSize = _CELL * 0.8;
+  const padding = 10;
+  let xPos = width - padding - (MAX_LIVES * (heartSize + 5));
+
+  for (let i = 0; i < MAX_LIVES; i++) {
+    const heart = (i < lives) ? imgHeartFull : imgHeartEmpty;
+    image(heart, xPos, padding, heartSize, heartSize);
+    xPos += heartSize + 5;
+  }
+}
+
+function updateHeartsUI() {
+  const heartsEl = document.getElementById("heartsUI");
+  if (!heartsEl) return;
+
+  let heartsHTML = '';
+  for (let i = 0; i < MAX_LIVES; i++) {
+    if (i < lives) {
+      heartsHTML += '❤️ ';
+    } else {
+      heartsHTML += '🤍 ';
+    }
+  }
+  heartsEl.textContent = heartsHTML;
+}
+
+function newGame() {
   snake = new Snake(_CELL);
   food = new Food(_CELL);
   food.relocateAvoidSnake(snake, getCols(), getRows());
-
-  if (!freeze) GAME_MODE = "PLAY";
+  lives = MAX_LIVES;
+  GAME_MODE = "PLAY";
 
   // por si antes se detuvo
   if (isLooping() === false) loop();
@@ -214,12 +253,14 @@ function eatFood() {
       // ✅ solo crece si acierta
       snake.growAfterEat();
     } else {
-      // ❌ castigo: quitar 1 segmento
-      if (snake.body.length <= 2) {
+
+      // ❌ castigo: perder una vida
+      lives--;
+      if (lives <= 0) {
+        // Game over por falta de vidas
+
         showGameOver();
         return;
-      } else {
-        snake.shrink(1);
       }
     }
 
