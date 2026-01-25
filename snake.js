@@ -138,10 +138,10 @@ class Snake {
   }
 
 getHeadRotation() {
-  if (this.dir.y === 1)  return PI;        // Frente
-  if (this.dir.x === 1)  return PI / 2;    // Derecha
-  if (this.dir.x === -1) return -PI / 2;   // Izquierda
-  if (this.dir.y === -1) return 0;         // Atrás
+  if (this.dir.y === 1)  return 0;        // Frente
+  if (this.dir.x === 1)  return -PI / 2;  // Derecha
+  if (this.dir.x === -1) return PI / 2;   // Izquierda
+  if (this.dir.y === -1) return PI;       // Atrás
   return 0;
 }
 
