@@ -320,9 +320,6 @@ function eatFood() {
       snake.growAfterEat();
     } else {
 
-      // sonido de fallo (solo corta duración)
-      playWrongSfx(800);
-
       // ❌ castigo: perder una vida
       lives--;
       if (lives <= 0) {
