@@ -113,6 +113,11 @@ class Snake {
     this.body.shift();
 
     this.length = this.body.length;
+
+    // Game over si solo queda la cabeza
+    if (this.length <= 2) {
+      this.isDead = true;
+    }
   }
 
   show() {
