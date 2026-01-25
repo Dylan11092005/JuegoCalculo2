@@ -509,6 +509,7 @@ Eliminar raíces cuadradas y simplificar la integral`,
 let quizActive = false;
 let currentQuestion = null;
 let locked = false;
+let bodyOverflowBackup = "";
 
 window.startQuiz = function startQuiz(onResult) {
   if (quizActive) return;
@@ -544,16 +545,16 @@ window.startQuiz = function startQuiz(onResult) {
   qEl.textContent = `[${currentQuestion.topic}] ${currentQuestion.q}`;
 
   // Mostrar overlay con scroll (desktop y móvil)
-  overlay.style.display = "grid";
+  overlay.style.display = "block";
   overlay.style.position = "fixed";
   overlay.style.top = "0";
   overlay.style.left = "0";
   overlay.style.right = "0";
   overlay.style.bottom = "0";
-  overlay.style.overflowY = "auto";
+  overlay.style.overflowY = "scroll";
   overlay.style.alignContent = "start";
   overlay.style.padding = "20px";
-  overlay.style.paddingBottom = "120px"; // espacio para botón
+  overlay.style.paddingBottom = "140px"; // espacio para botón
   overlay.style.height = "100vh";
   overlay.style.maxHeight = "100vh";
   overlay.style.width = "100vw";
@@ -561,6 +562,11 @@ window.startQuiz = function startQuiz(onResult) {
   overlay.style.webkitOverflowScrolling = "touch"; // scroll suave en iOS/Android
   overlay.style.touchAction = "pan-y"; // permite desplazar vertical
   overlay.style.backgroundColor = overlay.style.backgroundColor || "rgba(0,0,0,0.1)";
+  overlay.scrollTop = 0;
+
+  // Bloquear scroll del body y delegar al overlay
+  bodyOverflowBackup = document.body.style.overflow;
+  document.body.style.overflow = "hidden";
 
   // ✅ Evita que el canvas capture toques mientras está el quiz
   const cnv = document.querySelector("canvas");
@@ -667,6 +673,8 @@ window.startQuiz = function startQuiz(onResult) {
     quizActive = false;
     currentQuestion = null;
     locked = false;
+    document.body.style.overflow = bodyOverflowBackup || "";
+    bodyOverflowBackup = "";
 
     // ✅ Reactiva el canvas al salir del quiz
     const cnv2 = document.querySelector("canvas");
