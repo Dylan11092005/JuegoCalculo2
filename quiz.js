@@ -11,12 +11,22 @@ const QUESTION_BANK = [
     q: "Calcula: ∫ sin(x) dx",
     choices: ["-cos(x) + C", "cos(x) + C", "sin(x) + C", "-sin(x) + C"],
     correctIndex: 0,
+    solution: `Paso 1: Identificar integral básica
+∫ sin(x) dx
+
+Paso 2: Aplicar fórmula directa
+= -cos(x) + C`,
   },
   {
     topic: "Potencias trigonométricas (Fácil)",
     q: "Calcula: ∫ cos(x) dx",
     choices: ["sin(x) + C", "-sin(x) + C", "cos(x) + C", "-cos(x) + C"],
     correctIndex: 0,
+    solution: `Paso 1: Integral básica
+∫ cos(x) dx
+
+Paso 2: Resultado directo
+= sin(x) + C`,
   },
   {
     topic: "Potencias trigonométricas (Fácil)",
@@ -28,6 +38,11 @@ const QUESTION_BANK = [
       "cos²(x) = 1 + sin²(x)",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Reconocer potencia par
+cos²(x)
+
+Paso 2: Usar identidad de ángulo doble
+cos²(x) = (1 + cos(2x))/2`,
   },
   {
     topic: "Potencias trigonométricas (Fácil)",
@@ -39,6 +54,14 @@ const QUESTION_BANK = [
       "sin(x)/2 + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Usar identidad
+sin²(x) = (1 − cos(2x))/2
+
+Paso 2: Sustituir
+∫ (1 − cos(2x))/2 dx
+
+Paso 3: Integrar término a término
+= x/2 − sin(2x)/4 + C`,
   },
   {
     topic: "Potencias trigonométricas (Fácil)",
@@ -50,6 +73,14 @@ const QUESTION_BANK = [
       "Usar sustitución trigonométrica",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Si la potencia es impar
+sin³(x)
+
+Paso 2: Separar un seno
+sin²(x)sin(x)
+
+Paso 3: Convertir sin²(x) usando
+1 − cos²(x)`,
   },
 
   // --- Media (6–10) ---
@@ -63,6 +94,20 @@ const QUESTION_BANK = [
       "-sin(x) + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Separar un seno
+sin²(x)sin(x)
+
+Paso 2: Usar identidad
+(1 − cos²(x))sin(x)
+
+Paso 3: Sustitución
+u = cos(x), du = -sin(x)dx
+
+Paso 4: Integrar
+-∫(1 − u²)du
+
+Resultado:
+-cos(x) + cos³(x)/3 + C`,
   },
   {
     topic: "Potencias trigonométricas (Media)",
@@ -74,6 +119,17 @@ const QUESTION_BANK = [
       "tan(x) + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Separar un coseno
+cos²(x)cos(x)
+
+Paso 2: Identidad
+(1 − sin²(x))cos(x)
+
+Paso 3: Sustitución
+u = sin(x), du = cos(x)dx
+
+Resultado:
+sin(x) − sin³(x)/3 + C`,
   },
   {
     topic: "Potencias trigonométricas (Media)",
@@ -85,6 +141,8 @@ const QUESTION_BANK = [
       "u = sec(x)",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Elegir función cuya derivada esté presente
+u = sin(x)`,
   },
   {
     topic: "Potencias trigonométricas (Media)",
@@ -96,6 +154,14 @@ const QUESTION_BANK = [
       "cos(x) + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Sustituir
+u = sin(x), du = cos(x)dx
+
+Paso 2: Integral
+∫ u²du
+
+Resultado:
+sin³(x)/3 + C`,
   },
   {
     topic: "Potencias trigonométricas (Media)",
@@ -107,6 +173,13 @@ const QUESTION_BANK = [
       "Usar sustitución trigonométrica",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Ambas potencias son pares
+
+Paso 2: Usar identidades
+sin²(x) = (1 − cos(2x))/2
+cos²(x) = (1 + cos(2x))/2
+
+Paso 3: Multiplicar e integrar normalmente`,
   },
 
   // --- Difícil (11–15) ---
@@ -120,6 +193,16 @@ const QUESTION_BANK = [
       "cos⁴(x)/4 + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Usar identidad
+sin⁴(x) = (sin²(x))²
+
+Paso 2: Sustituir
+((1 − cos(2x))/2)²
+
+Paso 3: Expandir e integrar
+
+Resultado:
+3x/8 − sin(2x)/4 + sin(4x)/32 + C`,
   },
   {
     topic: "Potencias trigonométricas (Difícil)",
@@ -131,6 +214,11 @@ const QUESTION_BANK = [
       "-sin(x) + C",
     ],
     correctIndex: 0,
+    solution: `Mismo proceso que sin⁴(x), usando
+cos²(x) = (1 + cos(2x))/2
+
+Resultado:
+3x/8 + sin(2x)/4 + sin(4x)/32 + C`,
   },
   {
     topic: "Potencias trigonométricas (Difícil)",
@@ -142,6 +230,10 @@ const QUESTION_BANK = [
       "Integración por partes",
     ],
     correctIndex: 0,
+    solution: `Paso 1: Potencia impar de seno
+
+Paso 2: Separar un seno y usar
+u = cos(x)`,
   },
   {
     topic: "Potencias trigonométricas (Difícil)",
@@ -153,6 +245,17 @@ const QUESTION_BANK = [
       "-sin(x) + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1:
+sin²(x)sin(x)cos²(x)
+
+Paso 2:
+(1 − cos²(x))sin(x)cos²(x)
+
+Paso 3: Sustitución
+u = cos(x), du = -sin(x)dx
+
+Resultado:
+-cos³(x)/3 + cos⁵(x)/5 + C`,
   },
   {
     topic: "Potencias trigonométricas (Difícil)",
@@ -164,6 +267,8 @@ const QUESTION_BANK = [
       "Integración por partes",
     ],
     correctIndex: 0,
+    solution: `Respuesta:
+Usar identidades de ángulo doble`,
   },
 
   // ===============================
@@ -181,6 +286,8 @@ const QUESTION_BANK = [
       "x = a·cos(θ)",
     ],
     correctIndex: 0,
+    solution: `Sustitución:
+x = a·sin(θ)`,
   },
   {
     topic: "Sustitución trigonométrica (Fácil)",
@@ -192,6 +299,8 @@ const QUESTION_BANK = [
       "x = a·sec(θ)",
     ],
     correctIndex: 0,
+    solution: `Sustitución:
+x = a·tan(θ)`,
   },
   {
     topic: "Sustitución trigonométrica (Fácil)",
@@ -203,6 +312,8 @@ const QUESTION_BANK = [
       "x = a·cos(θ)",
     ],
     correctIndex: 0,
+    solution: `Sustitución:
+x = a·sec(θ)`,
   },
   {
     topic: "Sustitución trigonométrica (Fácil)",
@@ -214,6 +325,8 @@ const QUESTION_BANK = [
       "sec(θ)dθ",
     ],
     correctIndex: 0,
+    solution: `Derivar:
+dx = 5cos(θ)dθ`,
   },
   {
     topic: "Sustitución trigonométrica (Fácil)",
@@ -225,6 +338,11 @@ const QUESTION_BANK = [
       "sec(θ)",
     ],
     correctIndex: 0,
+    solution: `Paso 1:
+x = 3sin(θ)
+
+Paso 2:
+√(9 − x²) = 3cos(θ)`,
   },
 
   // --- Media (21–25) ---
@@ -238,6 +356,15 @@ const QUESTION_BANK = [
       "x√(9 − x²) + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1:
+x = 3sin(θ)
+
+Paso 2: Convertir toda la integral
+
+Paso 3: Integrar y volver a x
+
+Resultado:
+(x/2)√(9 − x²) + (9/2)arcsin(x/3) + C`,
   },
   {
     topic: "Sustitución trigonométrica (Media)",
@@ -249,6 +376,17 @@ const QUESTION_BANK = [
       "tan(x/4) + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1:
+x = 4tan(θ)
+
+Paso 2:
+dx = 4sec²(θ)dθ
+
+Paso 3: Integrar
+∫ sec(θ)dθ
+
+Resultado:
+ln|x + √(x² + 16)| + C`,
   },
   {
     topic: "Sustitución trigonométrica (Media)",
@@ -260,6 +398,8 @@ const QUESTION_BANK = [
       "4tan(θ)",
     ],
     correctIndex: 0,
+    solution: `Resultado:
+4sec(θ)`,
   },
   {
     topic: "Sustitución trigonométrica (Media)",
@@ -271,6 +411,11 @@ const QUESTION_BANK = [
       "1/(x + 3) + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1:
+x = 3tan(θ)
+
+Paso 2: Integrar
+(1/3)arctan(x/3) + C`,
   },
   {
     topic: "Sustitución trigonométrica (Media)",
@@ -282,6 +427,8 @@ const QUESTION_BANK = [
       "1 − cos²(θ) = sin²(θ)",
     ],
     correctIndex: 0,
+    solution: `Identidad usada con tan:
+1 + tan²(θ) = sec²(θ)`,
   },
 
   // --- Difícil (26–30) ---
@@ -295,6 +442,15 @@ const QUESTION_BANK = [
       "arccos(4/x) + C",
     ],
     correctIndex: 0,
+    solution: `Paso 1:
+x = 4sec(θ)
+
+Paso 2: Convertir integral
+
+Paso 3: Integrar y volver a x
+
+Resultado:
+(x/2)√(x² − 16) − 8 ln|x + √(x² − 16)| + C`,
   },
   {
     topic: "Sustitución trigonométrica (Difícil)",
@@ -306,6 +462,7 @@ const QUESTION_BANK = [
       "4cos(θ)dθ",
     ],
     correctIndex: 0,
+    solution: `dx = 4sec(θ)tan(θ)dθ`,
   },
   {
     topic: "Sustitución trigonométrica (Difícil)",
@@ -317,6 +474,8 @@ const QUESTION_BANK = [
       "a·sec(θ)",
     ],
     correctIndex: 0,
+    solution: `√(x² − a²) con sec:
+a·tan(θ)`,
   },
   {
     topic: "Sustitución trigonométrica (Difícil)",
@@ -328,6 +487,8 @@ const QUESTION_BANK = [
       "Aplicar integración por partes",
     ],
     correctIndex: 0,
+    solution: `Último paso de sustitución:
+Volver a la variable x`,
   },
   {
     topic: "Sustitución trigonométrica (Difícil)",
@@ -339,6 +500,8 @@ const QUESTION_BANK = [
       "Para evitar constantes",
     ],
     correctIndex: 0,
+    solution: `Objetivo de la sustitución trigonométrica:
+Eliminar raíces cuadradas y simplificar la integral`,
   },
 ];
 
@@ -408,7 +571,7 @@ window.startQuiz = function startQuiz(onResult) {
     if (!quizActive || locked) return;
     if (e.key >= "1" && e.key <= "4") {
       submit(parseInt(e.key, 10) - 1);
-    }
+    } 
   };
   window.__quizKeyHandler = keyHandler;
   window.addEventListener("keydown", keyHandler);
@@ -418,13 +581,56 @@ window.startQuiz = function startQuiz(onResult) {
     locked = true;
 
     const correct = choiceIndex === currentQuestion.correctIndex;
-    feedbackEl.textContent = correct ? "✅ Correcto" : "❌ Incorrecto";
+    if (correct) {
+      feedbackEl.innerHTML = "✅ Correcto";
+    } else {
+      const correctAnswer = currentQuestion.choices[currentQuestion.correctIndex];
+      const solution = currentQuestion.solution || "No hay solución disponible";
+      feedbackEl.innerHTML = `
+        <div style="text-align: left;">
+          <strong style="color: #ef4444;">❌ Incorrecto</strong><br><br>
+          <strong>Respuesta correcta:</strong><br>
+          ${correctAnswer}<br><br>
+          <strong>Solución paso a paso:</strong><br>
+          <pre style="white-space: pre-wrap; font-family: inherit; margin: 8px 0;">${solution}</pre>
+        </div>
+      `;
+    }
 
-    setTimeout(() => {
+    // Crear botón "Continuar"
+    const continueBtn = document.createElement("button");
+    continueBtn.textContent = "Continuar";
+    continueBtn.style.marginTop = "20px";
+    continueBtn.style.padding = "12px 24px";
+    continueBtn.style.fontSize = "16px";
+    continueBtn.style.fontWeight = "700";
+    continueBtn.style.borderRadius = "14px";
+    continueBtn.style.border = "none";
+    continueBtn.style.background = "#3b82f6";
+    continueBtn.style.color = "white";
+    continueBtn.style.cursor = "pointer";
+    continueBtn.style.width = "100%";
+
+    // Touch para móvil
+    continueBtn.addEventListener(
+      "touchstart",
+      (e) => {
+        e.preventDefault();
+        overlay.style.display = "none";
+        cleanup();
+        if (typeof onResult === "function") onResult(correct);
+      },
+      { passive: false }
+    );
+
+    // Click para PC
+    continueBtn.onclick = () => {
       overlay.style.display = "none";
       cleanup();
       if (typeof onResult === "function") onResult(correct);
-    }, 600);
+    };
+
+    feedbackEl.appendChild(continueBtn);
   }
 
   function cleanup() {
