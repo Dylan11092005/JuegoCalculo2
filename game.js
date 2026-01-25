@@ -394,13 +394,19 @@ function keyPressed() {
 
 // Swipe
 function touchStarted() {
+  // ✅ Si NO estás jugando, deja que el navegador haga scroll normal
+  if (GAME_MODE !== "PLAY") return true;
+
   touchStartX = mouseX;
   touchStartY = mouseY;
+
+  // ✅ Solo bloquea scroll cuando sí estás jugando
   return false;
 }
 
 function touchEnded() {
-  if (GAME_MODE !== "PLAY") return false;
+  // ✅ Si NO estás jugando, deja que el navegador haga scroll normal
+  if (GAME_MODE !== "PLAY") return true;
 
   const dx = mouseX - touchStartX;
   const dy = mouseY - touchStartY;
@@ -414,6 +420,7 @@ function touchEnded() {
   if (absX > absY) (dx > 0) ? setDirection("RIGHT") : setDirection("LEFT");
   else (dy > 0) ? setDirection("DOWN") : setDirection("UP");
 
+  // ✅ bloquea scroll solo durante juego
   return false;
 }
 

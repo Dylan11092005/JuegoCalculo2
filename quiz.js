@@ -566,7 +566,7 @@ window.startQuiz = function startQuiz(onResult) {
 
   // Bloquear scroll del body y delegar al overlay
   bodyOverflowBackup = document.body.style.overflow;
-  document.body.style.overflow = "hidden";
+  document.body.style.overflow = "";
 
   // ✅ Evita que el canvas capture toques mientras está el quiz
   const cnv = document.querySelector("canvas");
