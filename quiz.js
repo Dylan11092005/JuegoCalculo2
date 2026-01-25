@@ -517,6 +517,17 @@ window.startQuiz = function startQuiz(onResult) {
   locked = false;
   currentQuestion = QUESTION_BANK[Math.floor(Math.random() * QUESTION_BANK.length)];
 
+  // Mezclar opciones aleatoriamente
+  const correctAnswer = currentQuestion.choices[currentQuestion.correctIndex];
+  const shuffledChoices = [...currentQuestion.choices].sort(() => Math.random() - 0.5);
+  const newCorrectIndex = shuffledChoices.indexOf(correctAnswer);
+  
+  currentQuestion = {
+    ...currentQuestion,
+    choices: shuffledChoices,
+    correctIndex: newCorrectIndex
+  };
+
   const overlay = document.getElementById("quizOverlay");
   const qEl = document.getElementById("quizQ");
   const choicesEl = document.getElementById("quizChoices");
