@@ -543,11 +543,18 @@ window.startQuiz = function startQuiz(onResult) {
   // Pregunta
   qEl.textContent = `[${currentQuestion.topic}] ${currentQuestion.q}`;
 
-  // Mostrar overlay
+  // Mostrar overlay con scroll (desktop y móvil)
   overlay.style.display = "grid";
   overlay.style.overflowY = "auto";
   overlay.style.alignContent = "start";
   overlay.style.padding = "20px";
+  overlay.style.paddingBottom = "80px"; // espacio para botón
+  overlay.style.height = "100vh";
+  overlay.style.maxHeight = "100vh";
+  overlay.style.width = "100vw";
+  overlay.style.boxSizing = "border-box";
+  overlay.style.webkitOverflowScrolling = "touch"; // scroll suave en iOS/Android
+  overlay.style.touchAction = "pan-y"; // permite desplazar vertical
 
   // ✅ Evita que el canvas capture toques mientras está el quiz
   const cnv = document.querySelector("canvas");
