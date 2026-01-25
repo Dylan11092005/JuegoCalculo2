@@ -129,8 +129,8 @@ function draw() {
 
 function drawBoard() {
   noStroke();
-  const c1 = color(170, 215, 81);
-  const c2 = color(162, 209, 73);
+  const c1 = color(100, 180, 255);
+  const c2 = color(80, 160, 240);
 
   for (let y = 0; y < height; y += _CELL) {
     for (let x = 0; x < width; x += _CELL) {
