@@ -597,11 +597,40 @@ window.startQuiz = function startQuiz(onResult) {
       `;
     }
 
-    setTimeout(() => {
+    // Crear botón "Continuar"
+    const continueBtn = document.createElement("button");
+    continueBtn.textContent = "Continuar";
+    continueBtn.style.marginTop = "20px";
+    continueBtn.style.padding = "12px 24px";
+    continueBtn.style.fontSize = "16px";
+    continueBtn.style.fontWeight = "700";
+    continueBtn.style.borderRadius = "14px";
+    continueBtn.style.border = "none";
+    continueBtn.style.background = "#3b82f6";
+    continueBtn.style.color = "white";
+    continueBtn.style.cursor = "pointer";
+    continueBtn.style.width = "100%";
+
+    // Touch para móvil
+    continueBtn.addEventListener(
+      "touchstart",
+      (e) => {
+        e.preventDefault();
+        overlay.style.display = "none";
+        cleanup();
+        if (typeof onResult === "function") onResult(correct);
+      },
+      { passive: false }
+    );
+
+    // Click para PC
+    continueBtn.onclick = () => {
       overlay.style.display = "none";
       cleanup();
       if (typeof onResult === "function") onResult(correct);
-    }, 2500);
+    };
+
+    feedbackEl.appendChild(continueBtn);
   }
 
   function cleanup() {
