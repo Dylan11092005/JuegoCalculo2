@@ -238,6 +238,53 @@
   </style>
 </head>
 
+<!-- START SCREEN -->
+<div id="startOverlay" style="
+  position:fixed; inset:0; display:grid; place-items:center;
+  background:rgba(0,0,0,0.55); z-index:10001;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+">
+  <div style="
+    width:min(520px,92vw);
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 18px 55px rgba(0,0,0,.25);
+    border:1px solid rgba(17,24,39,.08);
+  ">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <div>
+        <div style="font-size:18px; font-weight:900;">Snake • Cálculo 2</div>
+        <div style="font-size:12px; opacity:.7;">Aprende jugando</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px; font-weight:900;">Reglas rápidas</div>
+    <ul style="margin:8px 0 0; padding-left:18px; line-height:1.35; font-size:14px;">
+      <li>Desliza para mover la serpiente.</li>
+      <li>Al comer, aparece una pregunta de Cálculo 2.</li>
+      <li>✅ Si aciertas: creces.</li>
+      <li>❌ Si fallas: pierdes 1 segmento.</li>
+      <li>Atraviesas las paredes (sales por un lado y entras por el otro).</li>
+      <li>Game Over si chocas contigo mismo o quedas sin segmentos.</li>
+    </ul>
+
+    <button id="playBtn" type="button" style="
+      margin-top:16px; width:100%;
+      border:0; border-radius:14px;
+      padding:12px 14px;
+      font-weight:900; font-size:15px;
+      background:rgba(17,24,39,.10);
+      cursor:pointer;
+    ">▶ Jugar</button>
+
+    <div style="margin-top:10px; font-size:12px; opacity:.7;">
+      Tip: si estás en PC, también puedes usar las flechas.
+    </div>
+  </div>
+</div>
+
+
 <body>
   <div class="app">
     <div class="card">
