@@ -524,6 +524,9 @@ window.startQuiz = function startQuiz(onResult) {
 
   // Reset UI
   feedbackEl.textContent = "";
+  feedbackEl.style.maxHeight = "";
+  feedbackEl.style.overflowY = "";
+  feedbackEl.style.overflowX = "";
   choicesEl.innerHTML = "";
 
   // Pregunta
@@ -531,6 +534,9 @@ window.startQuiz = function startQuiz(onResult) {
 
   // Mostrar overlay
   overlay.style.display = "grid";
+  overlay.style.overflowY = "auto";
+  overlay.style.alignContent = "start";
+  overlay.style.padding = "20px";
 
   // ✅ Evita que el canvas capture toques mientras está el quiz
   const cnv = document.querySelector("canvas");
