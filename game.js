@@ -1,4 +1,5 @@
-let GAME_MODE = "PLAY"; // "PLAY" | "QUIZ" | "GAME_OVER"
+let GAME_MODE = "START"; // "START" | "PLAY" | "QUIZ" | "GAME_OVER"
+
 let snake, food;
 
 const _CELL = (typeof CELL !== "undefined") ? CELL : 28;
@@ -7,11 +8,20 @@ const _SNAKE_SPEED = (typeof SNAKE_SPEED !== "undefined") ? SNAKE_SPEED : 6;
 let touchStartX = null;
 let touchStartY = null;
 
+// Sistema de vidas
+let lives = 5;
+const MAX_LIVES = 5;
+let imgHeartFull, imgHeartEmpty;
+
 function setup() {
   const dims = getCanvasDims();
   const cnv = createCanvas(dims.w, dims.h);
   cnv.parent("canvasWrap");
   noSmooth();
+
+  // Cargar imágenes de corazones
+  imgHeartFull = loadImage('img/corazonLleno.png');
+  imgHeartEmpty = loadImage('img/corazonVacio.png');
 
   // Si no cargó snake.js/food.js, mostramos el error
   if (typeof Snake !== "function" || typeof Food !== "function") {
@@ -23,8 +33,34 @@ function setup() {
     return;
   }
 
+  setupStartUI();
   setupGameOverUI();
-  newGame();
+
+  // Crea snake/food pero queda congelado en START
+  newGame(true);
+  GAME_MODE = "START";
+}
+
+function setupStartUI() {
+  const overlay = document.getElementById("startOverlay");
+  const btn = document.getElementById("playBtn");
+  if (!overlay || !btn) return;
+
+  const startHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    overlay.style.display = "none";
+    GAME_MODE = "PLAY";
+  };
+
+  // PC
+  btn.onclick = startHandler;
+  // Móvil
+  btn.addEventListener("touchstart", startHandler, { passive: false });
+
+  // Asegura visible al cargar
+  overlay.style.display = "grid";
 }
 
 function setupGameOverUI() {
@@ -40,20 +76,20 @@ function setupGameOverUI() {
     if (cnv) cnv.style.pointerEvents = "auto";
 
     hideGameOver();
-    newGame();
+
+    // Reinicia y vuelve a START (pantalla inicial)
+    newGame(true);
+    const startOverlay = document.getElementById("startOverlay");
+    if (startOverlay) startOverlay.style.display = "grid";
+    GAME_MODE = "START";
   };
 
   // PC
   btn.onclick = restartHandler;
 
   // MÓVIL (clave)
-  btn.addEventListener(
-    "touchstart",
-    restartHandler,
-    { passive: false }
-  );
+  btn.addEventListener("touchstart", restartHandler, { passive: false });
 }
-
 
 function windowResized() {
   const dims = getCanvasDims();
@@ -85,9 +121,19 @@ function draw() {
     const scoreEl = document.getElementById("scoreUI");
     if (scoreEl) scoreEl.textContent = String(snake?.length ?? 0);
 
+    // Dibujar corazones
+    drawHearts();
+
     // Si por algo snake/food no existen, intenta crearlos
     if (!snake || !food) {
-      newGame();
+      newGame(true);
+    }
+
+    // START: congelado, esperando Play
+    if (GAME_MODE === "START") {
+      food.show();
+      snake.show();
+      return;
     }
 
     if (GAME_MODE === "GAME_OVER") {
@@ -103,7 +149,7 @@ function draw() {
     }
 
     // PLAY
-    if (frameCount % _SNAKE_SPEED === 0) {
+    if (frameCount % _SNAKE_SPEED == 0) {
       snake.update(getCols(), getRows(), food);
 
       if (snake.isDead) {
@@ -141,10 +187,39 @@ function drawBoard() {
   }
 }
 
+
+function drawHearts() {
+  const heartSize = _CELL * 0.8;
+  const padding = 10;
+  let xPos = width - padding - (MAX_LIVES * (heartSize + 5));
+
+  for (let i = 0; i < MAX_LIVES; i++) {
+    const heart = (i < lives) ? imgHeartFull : imgHeartEmpty;
+    image(heart, xPos, padding, heartSize, heartSize);
+    xPos += heartSize + 5;
+  }
+}
+
+function updateHeartsUI() {
+  const heartsEl = document.getElementById("heartsUI");
+  if (!heartsEl) return;
+
+  let heartsHTML = '';
+  for (let i = 0; i < MAX_LIVES; i++) {
+    if (i < lives) {
+      heartsHTML += '❤️ ';
+    } else {
+      heartsHTML += '🤍 ';
+    }
+  }
+  heartsEl.textContent = heartsHTML;
+}
+
 function newGame() {
   snake = new Snake(_CELL);
   food = new Food(_CELL);
   food.relocateAvoidSnake(snake, getCols(), getRows());
+  lives = MAX_LIVES;
   GAME_MODE = "PLAY";
 
   // por si antes se detuvo
@@ -178,13 +253,14 @@ function eatFood() {
       // ✅ solo crece si acierta
       snake.growAfterEat();
     } else {
-      // ❌ castigo: quitar 1 segmento
-      if (snake.body.length <= 2) {
-        // ya está al mínimo -> pierde
+
+      // ❌ castigo: perder una vida
+      lives--;
+      if (lives <= 0) {
+        // Game over por falta de vidas
+
         showGameOver();
         return;
-      } else {
-        snake.shrink(1);
       }
     }
 
@@ -197,10 +273,10 @@ function eatFood() {
 function keyPressed() {
   if (GAME_MODE !== "PLAY") return;
 
-  if (keyCode === UP_ARROW) setDirection("UP");
-  else if (keyCode === DOWN_ARROW) setDirection("DOWN");
-  else if (keyCode === LEFT_ARROW) setDirection("LEFT");
-  else if (keyCode === RIGHT_ARROW) setDirection("RIGHT");
+  if (keyCode == UP_ARROW) setDirection("UP");
+  else if (keyCode == DOWN_ARROW) setDirection("DOWN");
+  else if (keyCode == LEFT_ARROW) setDirection("LEFT");
+  else if (keyCode == RIGHT_ARROW) setDirection("RIGHT");
 }
 
 // Swipe
