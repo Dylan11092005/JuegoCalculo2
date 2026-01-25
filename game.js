@@ -1,6 +1,7 @@
 let GAME_MODE = "START"; // "START" | "PLAY" | "QUIZ" | "GAME_OVER"
 
 let snake, food, heart;
+let score = 0; // Contador de preguntas correctas
 let audioBg, audioEat;
 let audioUnlocked = false;
 let audioEatTimer = null;
@@ -189,7 +190,7 @@ function draw() {
     drawBoard();
 
     const scoreEl = document.getElementById("scoreUI");
-    if (scoreEl) scoreEl.textContent = String(snake?.length ?? 0);
+    if (scoreEl) scoreEl.textContent = String(score);
 
     // Actualizar UI de vidas
     updateHeartsUI();
@@ -318,6 +319,7 @@ function newGame() {
   heart = new Heart(_CELL);
   food.relocateAvoidSnake(snake, getCols(), getRows());
   lives = MAX_LIVES;
+  score = 0;
   heartSpawnTimer = 0;
   heartSpawnInterval = Math.random() * 10 + 20;
   GAME_MODE = "PLAY";
@@ -359,6 +361,7 @@ function eatFood() {
     if (correct) {
       // ✅ solo crece si acierta
       snake.growAfterEat();
+      score++; // Incrementar el score
     } else {
 
       // ❌ castigo: perder una vida y reducir serpiente
