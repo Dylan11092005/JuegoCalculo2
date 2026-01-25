@@ -1,4 +1,5 @@
-let GAME_MODE = "PLAY"; // "PLAY" | "QUIZ" | "GAME_OVER"
+let GAME_MODE = "START"; // "START" | "PLAY" | "QUIZ" | "GAME_OVER"
+
 let snake, food;
 
 const _CELL = (typeof CELL !== "undefined") ? CELL : 28;
@@ -23,8 +24,34 @@ function setup() {
     return;
   }
 
+  setupStartUI();
   setupGameOverUI();
-  newGame();
+
+  // Crea snake/food pero queda congelado en START
+  newGame(true);
+  GAME_MODE = "START";
+}
+
+function setupStartUI() {
+  const overlay = document.getElementById("startOverlay");
+  const btn = document.getElementById("playBtn");
+  if (!overlay || !btn) return;
+
+  const startHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    overlay.style.display = "none";
+    GAME_MODE = "PLAY";
+  };
+
+  // PC
+  btn.onclick = startHandler;
+  // Móvil
+  btn.addEventListener("touchstart", startHandler, { passive: false });
+
+  // Asegura visible al cargar
+  overlay.style.display = "grid";
 }
 
 function setupGameOverUI() {
@@ -40,20 +67,20 @@ function setupGameOverUI() {
     if (cnv) cnv.style.pointerEvents = "auto";
 
     hideGameOver();
-    newGame();
+
+    // Reinicia y vuelve a START (pantalla inicial)
+    newGame(true);
+    const startOverlay = document.getElementById("startOverlay");
+    if (startOverlay) startOverlay.style.display = "grid";
+    GAME_MODE = "START";
   };
 
   // PC
   btn.onclick = restartHandler;
 
   // MÓVIL (clave)
-  btn.addEventListener(
-    "touchstart",
-    restartHandler,
-    { passive: false }
-  );
+  btn.addEventListener("touchstart", restartHandler, { passive: false });
 }
-
 
 function windowResized() {
   const dims = getCanvasDims();
@@ -87,7 +114,14 @@ function draw() {
 
     // Si por algo snake/food no existen, intenta crearlos
     if (!snake || !food) {
-      newGame();
+      newGame(true);
+    }
+
+    // START: congelado, esperando Play
+    if (GAME_MODE === "START") {
+      food.show();
+      snake.show();
+      return;
     }
 
     if (GAME_MODE === "GAME_OVER") {
@@ -103,7 +137,7 @@ function draw() {
     }
 
     // PLAY
-    if (frameCount % _SNAKE_SPEED === 0) {
+    if (frameCount % _SNAKE_SPEED == 0) {
       snake.update(getCols(), getRows(), food);
 
       if (snake.isDead) {
@@ -141,11 +175,13 @@ function drawBoard() {
   }
 }
 
-function newGame() {
+// freeze = true -> no cambia a PLAY (sirve para START y reinicios)
+function newGame(freeze = false) {
   snake = new Snake(_CELL);
   food = new Food(_CELL);
   food.relocateAvoidSnake(snake, getCols(), getRows());
-  GAME_MODE = "PLAY";
+
+  if (!freeze) GAME_MODE = "PLAY";
 
   // por si antes se detuvo
   if (isLooping() === false) loop();
@@ -180,7 +216,6 @@ function eatFood() {
     } else {
       // ❌ castigo: quitar 1 segmento
       if (snake.body.length <= 2) {
-        // ya está al mínimo -> pierde
         showGameOver();
         return;
       } else {
@@ -197,10 +232,10 @@ function eatFood() {
 function keyPressed() {
   if (GAME_MODE !== "PLAY") return;
 
-  if (keyCode === UP_ARROW) setDirection("UP");
-  else if (keyCode === DOWN_ARROW) setDirection("DOWN");
-  else if (keyCode === LEFT_ARROW) setDirection("LEFT");
-  else if (keyCode === RIGHT_ARROW) setDirection("RIGHT");
+  if (keyCode == UP_ARROW) setDirection("UP");
+  else if (keyCode == DOWN_ARROW) setDirection("DOWN");
+  else if (keyCode == LEFT_ARROW) setDirection("LEFT");
+  else if (keyCode == RIGHT_ARROW) setDirection("RIGHT");
 }
 
 // Swipe
