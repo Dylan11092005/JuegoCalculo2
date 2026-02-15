@@ -509,6 +509,7 @@ Eliminar raíces cuadradas y simplificar la integral`,
 let quizActive = false;
 let currentQuestion = null;
 let locked = false;
+let bodyOverflowBackup = "";
 
 window.startQuiz = function startQuiz(onResult) {
   if (quizActive) return;
@@ -516,6 +517,17 @@ window.startQuiz = function startQuiz(onResult) {
   quizActive = true;
   locked = false;
   currentQuestion = QUESTION_BANK[Math.floor(Math.random() * QUESTION_BANK.length)];
+
+  // Mezclar opciones aleatoriamente
+  const correctAnswer = currentQuestion.choices[currentQuestion.correctIndex];
+  const shuffledChoices = [...currentQuestion.choices].sort(() => Math.random() - 0.5);
+  const newCorrectIndex = shuffledChoices.indexOf(correctAnswer);
+  
+  currentQuestion = {
+    ...currentQuestion,
+    choices: shuffledChoices,
+    correctIndex: newCorrectIndex
+  };
 
   const overlay = document.getElementById("quizOverlay");
   const qEl = document.getElementById("quizQ");
@@ -532,11 +544,29 @@ window.startQuiz = function startQuiz(onResult) {
   // Pregunta
   qEl.textContent = `[${currentQuestion.topic}] ${currentQuestion.q}`;
 
-  // Mostrar overlay
-  overlay.style.display = "grid";
-  overlay.style.overflowY = "auto";
+  // Mostrar overlay con scroll (desktop y móvil)
+  overlay.style.display = "block";
+  overlay.style.position = "fixed";
+  overlay.style.top = "0";
+  overlay.style.left = "0";
+  overlay.style.right = "0";
+  overlay.style.bottom = "0";
+  overlay.style.overflowY = "scroll";
   overlay.style.alignContent = "start";
   overlay.style.padding = "20px";
+  overlay.style.paddingBottom = "140px"; // espacio para botón
+  overlay.style.height = "100vh";
+  overlay.style.maxHeight = "100vh";
+  overlay.style.width = "100vw";
+  overlay.style.boxSizing = "border-box";
+  overlay.style.webkitOverflowScrolling = "touch"; // scroll suave en iOS/Android
+  overlay.style.touchAction = "pan-y"; // permite desplazar vertical
+  overlay.style.backgroundColor = overlay.style.backgroundColor || "rgba(0,0,0,0.1)";
+  overlay.scrollTop = 0;
+
+  // Bloquear scroll del body y delegar al overlay
+  bodyOverflowBackup = document.body.style.overflow;
+  document.body.style.overflow = "";
 
   // ✅ Evita que el canvas capture toques mientras está el quiz
   const cnv = document.querySelector("canvas");
@@ -643,6 +673,8 @@ window.startQuiz = function startQuiz(onResult) {
     quizActive = false;
     currentQuestion = null;
     locked = false;
+    document.body.style.overflow = bodyOverflowBackup || "";
+    bodyOverflowBackup = "";
 
     // ✅ Reactiva el canvas al salir del quiz
     const cnv2 = document.querySelector("canvas");

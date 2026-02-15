@@ -266,7 +266,7 @@
       <li>✅ Si aciertas: creces.</li>
       <li>❌ Si fallas: pierdes 1 segmento.</li>
       <li>Atraviesas las paredes (sales por un lado y entras por el otro).</li>
-      <li>Game Over si chocas contigo mismo o quedas sin segmentos.</li>
+      <li>Game Over si chocas contigo mismo, te quedes sin vidas o segmentos de cola.</li>
     </ul>
 
     <button id="playBtn" type="button" style="
@@ -291,13 +291,17 @@
       <div class="topbar">
         <div class="title">
           <b>Snake • Cálculo 2</b>
-          <span>Come solo si respondes bien</span>
+          <span>Crece solo si respondes bien</span>
         </div>
         <div class="pill">
           <span>Puntaje:</span> <span id="scoreUI">0</span>
+
         </div>
         <div class="pill">
           <span>Record:</span> <span id="highScoreUI">0</span>
+
+          <span style="margin-left: 20px;">Vidas:</span> <span id="heartsUI">❤️ ❤️ ❤️ ❤️ ❤️</span>
+
         </div>
       </div>
 
@@ -342,6 +346,7 @@
   <script src="config.js?v=4"></script>
   <script src="snake.js?v=4"></script>
   <script src="food.js?v=4"></script>
+  <script src="heart.js?v=4"></script>
   <script src="quiz.js?v=4"></script>
   <script src="game.js?v=4"></script>
 
