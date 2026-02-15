@@ -298,18 +298,16 @@
 
         </div>
         <div class="pill">
-          <span>Record:</span> <span id="highScoreUI">0</span>
-
-          <span style="margin-left: 20px;">Vidas:</span> <span id="heartsUI">❤️ ❤️ ❤️ ❤️ ❤️</span>
-
+          <span>Vidas:</span> <span id="heartsUI">❤️ ❤️ ❤️ ❤️ ❤️</span>
         </div>
       </div>
 
       <div id="canvasWrap"></div>
 
-      <div class="bottombar">
+      <div class="bottombar" style="display:flex; align-items:center; gap:12px;">
         <div class="hint">Swipe o usa el pad. Responde rápido.</div>
-        <button class="btn" onclick="location.reload()">Recargar</button>
+        <div class="pill" style="font-weight:800;">Record: <span id="highScoreUI">0</span></div>
+        <button class="btn" onclick="location.reload()">Reiniciar</button>
       </div>
     </div>
   </div>
