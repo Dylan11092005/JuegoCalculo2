@@ -58,8 +58,8 @@ class Snake {
 
   shrink(amount = 1) {
     for (let i = 0; i < amount; i++) {
-      // mínimo 2 segmentos para que el juego siga
-      if (this.body.length > 2) {
+      // mínimo 1 segmento (solo cabeza)
+      if (this.body.length > 1) {
         this.body.shift(); // quita cola
       }
     }

@@ -1,6 +1,6 @@
 // Tamaño celda y velocidad
 const CELL = 28;
-const SNAKE_SPEED = 6;
+const SNAKE_SPEED = 7;
 
 // Tiempo del quiz en segundos
 const QUIZ_SECONDS = 10;

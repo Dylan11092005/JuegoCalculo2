@@ -38,6 +38,8 @@ let touchStartY = null;
 // Sistema de vidas
 let lives = 5;
 const MAX_LIVES = 5;
+let correctAnswers = 0;
+let highScore = localStorage.getItem('snakeHighScore') ? parseInt(localStorage.getItem('snakeHighScore')) : 0;
 let imgHeartFull, imgHeartEmpty;
 
 function setup() {
@@ -178,7 +180,10 @@ function draw() {
     drawBoard();
 
     const scoreEl = document.getElementById("scoreUI");
-    if (scoreEl) scoreEl.textContent = String(snake?.length ?? 0);
+    if (scoreEl) scoreEl.textContent = String(correctAnswers);
+    
+    const highScoreEl = document.getElementById("highScoreUI");
+    if (highScoreEl) highScoreEl.textContent = String(highScore);
 
     // Dibujar corazones
     drawHearts();
@@ -279,6 +284,7 @@ function newGame() {
   food = new Food(_CELL);
   food.relocateAvoidSnake(snake, getCols(), getRows());
   lives = MAX_LIVES;
+  correctAnswers = 0;
   GAME_MODE = "PLAY";
 
   // por si antes se detuvo
@@ -289,9 +295,18 @@ function showGameOver() {
   GAME_MODE = "GAME_OVER";
   if (audioBg) { try { audioBg.pause(); audioBg.currentTime = 0; } catch(e){} }
   _clearSfxTimers();
+  
+  // Actualizar record si es necesario
+  if (correctAnswers > highScore) {
+    highScore = correctAnswers;
+    localStorage.setItem('snakeHighScore', String(highScore));
+  }
+  
   const overlay = document.getElementById("gameOverOverlay");
   const finalScore = document.getElementById("finalScore");
-  if (finalScore) finalScore.textContent = `Score: ${snake?.length ?? 0}`;
+  const finalHighScore = document.getElementById("finalHighScore");
+  if (finalScore) finalScore.textContent = `Puntaje: ${correctAnswers}`;
+  if (finalHighScore) finalHighScore.textContent = `Record: ${highScore}`;
   if (overlay) overlay.style.display = "grid";
 }
 
@@ -317,15 +332,16 @@ function eatFood() {
   startQuiz((correct) => {
     if (correct) {
       // ✅ solo crece si acierta
+      correctAnswers++;
       snake.growAfterEat();
     } else {
 
       // ❌ castigo: perder una vida y reducir serpiente
       lives--;
       snake.shrink();
-      if (lives <= 0) {
-        // Game over por falta de vidas
-
+      
+      // Game over si se queda solo la cabeza o sin vidas
+      if (snake.body.length <= 1 || lives <= 0) {
         showGameOver();
         return;
       }
