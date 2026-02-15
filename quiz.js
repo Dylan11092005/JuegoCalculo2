@@ -6,503 +6,643 @@ const QUESTION_BANK = [
   // ===============================
 
   // --- Fácil (1–5) ---
-  {
-    topic: "Potencias trigonométricas (Fácil)",
-    q: "Calcula: ∫ sin(x) dx",
-    choices: ["-cos(x) + C", "cos(x) + C", "sin(x) + C", "-sin(x) + C"],
-    correctIndex: 0,
-    solution: `Paso 1: Identificar integral básica
-∫ sin(x) dx
+  // ===============================
+// NUEVAS 20 — Sustitución trigonométrica
+// ===============================
 
-Paso 2: Aplicar fórmula directa
-= -cos(x) + C`,
-  },
-  {
-    topic: "Potencias trigonométricas (Fácil)",
-    q: "Calcula: ∫ cos(x) dx",
-    choices: ["sin(x) + C", "-sin(x) + C", "cos(x) + C", "-cos(x) + C"],
-    correctIndex: 0,
-    solution: `Paso 1: Integral básica
-∫ cos(x) dx
-
-Paso 2: Resultado directo
-= sin(x) + C`,
-  },
-  {
-    topic: "Potencias trigonométricas (Fácil)",
-    q: "¿Qué identidad se usa para resolver ∫ cos²(x) dx?",
-    choices: [
-      "cos²(x) = (1 + cos(2x))/2",
-      "cos²(x) = 1 - sin(x)",
-      "cos²(x) = sec²(x)",
-      "cos²(x) = 1 + sin²(x)",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Reconocer potencia par
-cos²(x)
-
-Paso 2: Usar identidad de ángulo doble
-cos²(x) = (1 + cos(2x))/2`,
-  },
-  {
-    topic: "Potencias trigonométricas (Fácil)",
-    q: "Calcula: ∫ sin²(x) dx",
-    choices: [
-      "x/2 − sin(2x)/4 + C",
-      "x − cos(x) + C",
-      "-cos²(x) + C",
-      "sin(x)/2 + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Usar identidad
-sin²(x) = (1 − cos(2x))/2
-
-Paso 2: Sustituir
-∫ (1 − cos(2x))/2 dx
-
-Paso 3: Integrar término a término
-= x/2 − sin(2x)/4 + C`,
-  },
-  {
-    topic: "Potencias trigonométricas (Fácil)",
-    q: "Si la potencia del seno es impar, ¿qué se hace primero?",
-    choices: [
-      "Separar un seno y usar identidad",
-      "Aplicar integración por partes",
-      "Cambiar a coordenadas polares",
-      "Usar sustitución trigonométrica",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Si la potencia es impar
-sin³(x)
-
-Paso 2: Separar un seno
-sin²(x)sin(x)
-
-Paso 3: Convertir sin²(x) usando
-1 − cos²(x)`,
-  },
-
-  // --- Media (6–10) ---
-  {
-    topic: "Potencias trigonométricas (Media)",
-    q: "Calcula: ∫ sin³(x) dx",
-    choices: [
-      "-cos(x) + cos³(x)/3 + C",
-      "cos(x) - cos³(x)/3 + C",
-      "sin²(x)/2 + C",
-      "-sin(x) + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Separar un seno
-sin²(x)sin(x)
-
-Paso 2: Usar identidad
-(1 − cos²(x))sin(x)
-
-Paso 3: Sustitución
-u = cos(x), du = -sin(x)dx
-
-Paso 4: Integrar
--∫(1 − u²)du
-
-Resultado:
--cos(x) + cos³(x)/3 + C`,
-  },
-  {
-    topic: "Potencias trigonométricas (Media)",
-    q: "Calcula: ∫ cos³(x) dx",
-    choices: [
-      "sin(x) − sin³(x)/3 + C",
-      "-sin(x) + sin³(x)/3 + C",
-      "cos²(x)/2 + C",
-      "tan(x) + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Separar un coseno
-cos²(x)cos(x)
-
-Paso 2: Identidad
-(1 − sin²(x))cos(x)
-
-Paso 3: Sustitución
-u = sin(x), du = cos(x)dx
-
-Resultado:
-sin(x) − sin³(x)/3 + C`,
-  },
-  {
-    topic: "Potencias trigonométricas (Media)",
-    q: "Para ∫ sin²(x)cos(x) dx, la sustitución correcta es:",
-    choices: [
-      "u = sin(x)",
-      "u = cos(x)",
-      "u = tan(x)",
-      "u = sec(x)",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Elegir función cuya derivada esté presente
-u = sin(x)`,
-  },
-  {
-    topic: "Potencias trigonométricas (Media)",
-    q: "Calcula: ∫ sin²(x)cos(x) dx",
-    choices: [
-      "sin³(x)/3 + C",
-      "-cos³(x)/3 + C",
-      "sin(x) + C",
-      "cos(x) + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Sustituir
-u = sin(x), du = cos(x)dx
-
-Paso 2: Integral
-∫ u²du
-
-Resultado:
-sin³(x)/3 + C`,
-  },
-  {
-    topic: "Potencias trigonométricas (Media)",
-    q: "Si ambas potencias son pares en ∫ sin²(x)cos²(x) dx, ¿qué se hace?",
-    choices: [
-      "Usar identidades de ángulo doble",
-      "Separar un seno",
-      "Separar un coseno",
-      "Usar sustitución trigonométrica",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Ambas potencias son pares
-
-Paso 2: Usar identidades
-sin²(x) = (1 − cos(2x))/2
-cos²(x) = (1 + cos(2x))/2
-
-Paso 3: Multiplicar e integrar normalmente`,
-  },
-
-  // --- Difícil (11–15) ---
-  {
-    topic: "Potencias trigonométricas (Difícil)",
-    q: "Calcula: ∫ sin⁴(x) dx",
-    choices: [
-      "3x/8 − sin(2x)/4 + sin(4x)/32 + C",
-      "x − sin(x) + C",
-      "sin³(x)/3 + C",
-      "cos⁴(x)/4 + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Usar identidad
-sin⁴(x) = (sin²(x))²
-
-Paso 2: Sustituir
-((1 − cos(2x))/2)²
-
-Paso 3: Expandir e integrar
-
-Resultado:
-3x/8 − sin(2x)/4 + sin(4x)/32 + C`,
-  },
-  {
-    topic: "Potencias trigonométricas (Difícil)",
-    q: "Calcula: ∫ cos⁴(x) dx",
-    choices: [
-      "3x/8 + sin(2x)/4 + sin(4x)/32 + C",
-      "x/2 + sin(x) + C",
-      "cos³(x)/3 + C",
-      "-sin(x) + C",
-    ],
-    correctIndex: 0,
-    solution: `Mismo proceso que sin⁴(x), usando
-cos²(x) = (1 + cos(2x))/2
-
-Resultado:
-3x/8 + sin(2x)/4 + sin(4x)/32 + C`,
-  },
-  {
-    topic: "Potencias trigonométricas (Difícil)",
-    q: "Para ∫ sin³(x)cos²(x) dx, la mejor estrategia es:",
-    choices: [
-      "Separar un seno y sustituir u = cos(x)",
-      "Separar un coseno y sustituir u = sin(x)",
-      "Usar sustitución trigonométrica",
-      "Integración por partes",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1: Potencia impar de seno
-
-Paso 2: Separar un seno y usar
-u = cos(x)`,
-  },
-  {
-    topic: "Potencias trigonométricas (Difícil)",
-    q: "Calcula: ∫ sin³(x)cos²(x) dx",
-    choices: [
-      "-cos³(x)/3 + cos⁵(x)/5 + C",
-      "sin⁵(x)/5 + C",
-      "cos(x) + C",
-      "-sin(x) + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1:
-sin²(x)sin(x)cos²(x)
+// --- Fácil (1–7) ---
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "Si x = sin(θ) y se obtiene I = cos(θ) + C, entonces I en términos de x es:",
+  choices: [
+    "√(1 − x²) + C",
+    "x + C",
+    "arcsin(x) + C",
+    "1/√(1 − x²) + C"
+  ],
+  correctIndex: 0,
+  solution: `Paso 1:
+x = sin(θ)
 
 Paso 2:
-(1 − cos²(x))sin(x)cos²(x)
+cos(θ) = √(1 − sin²(θ))
 
-Paso 3: Sustitución
-u = cos(x), du = -sin(x)dx
+Paso 3:
+cos(θ) = √(1 − x²)
 
 Resultado:
--cos³(x)/3 + cos⁵(x)/5 + C`,
-  },
-  {
-    topic: "Potencias trigonométricas (Difícil)",
-    q: "¿Qué identidad se aplica para reducir potencias pares?",
-    choices: [
-      "Identidades de ángulo doble",
-      "Identidades pitagóricas básicas",
-      "Derivadas trigonométricas",
-      "Integración por partes",
-    ],
-    correctIndex: 0,
-    solution: `Respuesta:
-Usar identidades de ángulo doble`,
-  },
+√(1 − x²) + C`,
+},
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "Para √(16 − x²), la sustitución correcta es:",
+  choices: [
+    "x = 4sin(θ)",
+    "x = 4tan(θ)",
+    "x = 4sec(θ)",
+    "x = 4cos(θ)"
+  ],
+  correctIndex: 0,
+  solution: `Forma:
+√(a² − x²)
 
-  // ===============================
-  // TEMA 2: Sustituciones trigonométricas
-  // ===============================
-
-  // --- Fácil (16–20) ---
-  {
-    topic: "Sustitución trigonométrica (Fácil)",
-    q: "Para √(a² − x²), la sustitución correcta es:",
-    choices: [
-      "x = a·sin(θ)",
-      "x = a·tan(θ)",
-      "x = a·sec(θ)",
-      "x = a·cos(θ)",
-    ],
-    correctIndex: 0,
-    solution: `Sustitución:
+Sustitución correcta:
 x = a·sin(θ)`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Fácil)",
-    q: "Para √(a² + x²), la sustitución correcta es:",
-    choices: [
-      "x = a·tan(θ)",
-      "x = a·sin(θ)",
-      "x = a·cos(θ)",
-      "x = a·sec(θ)",
-    ],
-    correctIndex: 0,
-    solution: `Sustitución:
-x = a·tan(θ)`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Fácil)",
-    q: "Para √(x² − a²), la sustitución correcta es:",
-    choices: [
-      "x = a·sec(θ)",
-      "x = a·sin(θ)",
-      "x = a·tan(θ)",
-      "x = a·cos(θ)",
-    ],
-    correctIndex: 0,
-    solution: `Sustitución:
+},
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "Si x = 5tan(θ), entonces dx es:",
+  choices: [
+    "5sec²(θ)dθ",
+    "5tan(θ)dθ",
+    "sec²(θ)dθ",
+    "5sec(θ)dθ"
+  ],
+  correctIndex: 0,
+  solution: `Derivar:
+dx/dθ = 5sec²(θ)
+
+Resultado:
+dx = 5sec²(θ)dθ`,
+},
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "Para √(x² − 36), la sustitución correcta es:",
+  choices: [
+    "x = 6sec(θ)",
+    "x = 6sin(θ)",
+    "x = 6tan(θ)",
+    "x = 6cos(θ)"
+  ],
+  correctIndex: 0,
+  solution: `Forma:
+√(x² − a²)
+
+Sustitución:
 x = a·sec(θ)`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Fácil)",
-    q: "Si x = 5sin(θ), entonces dx es:",
-    choices: [
-      "5cos(θ)dθ",
-      "5sin(θ)dθ",
-      "cos(θ)dθ",
-      "sec(θ)dθ",
-    ],
-    correctIndex: 0,
-    solution: `Derivar:
-dx = 5cos(θ)dθ`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Fácil)",
-    q: "√(9 − x²) se transforma en:",
-    choices: [
-      "3cos(θ)",
-      "3sin(θ)",
-      "tan(θ)",
-      "sec(θ)",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1:
-x = 3sin(θ)
+},
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "Si x = tan(θ), entonces √(1 + x²) es:",
+  choices: [
+    "sec(θ)",
+    "sin(θ)",
+    "cos(θ)",
+    "tan(θ)"
+  ],
+  correctIndex: 0,
+  solution: `Identidad:
+1 + tan²(θ) = sec²(θ)
+
+Entonces:
+√(1 + x²) = sec(θ)`,
+},
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "Para √(25 + x²), la sustitución correcta es:",
+  choices: [
+    "x = 5tan(θ)",
+    "x = 5sin(θ)",
+    "x = 5sec(θ)",
+    "x = 5cos(θ)"
+  ],
+  correctIndex: 0,
+  solution: `Forma:
+√(a² + x²)
+
+Sustitución:
+x = a·tan(θ)`,
+},
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "Si x = 4sin(θ), entonces dx es:",
+  choices: [
+    "4cos(θ)dθ",
+    "4sin(θ)dθ",
+    "cos(θ)dθ",
+    "4sec(θ)dθ"
+  ],
+  correctIndex: 0,
+  solution: `Derivar:
+dx = 4cos(θ)dθ`,
+},
+
+// --- Media (8–14) ---
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Si x = 2sec(θ) y se obtiene I = tan(θ) + C, entonces I en x es:",
+  choices: [
+    "√(x² − 4)/2 + C",
+    "√(x² − 4) + C",
+    "x/√(x² − 4) + C",
+    "arctan(x) + C"
+  ],
+  correctIndex: 0,
+  solution: `x = 2sec(θ)
+
+sec(θ) = x/2
+
+Triángulo:
+tan(θ) = √(x² − 4)/2`,
+},
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Si x = 3tan(θ), entonces √(x² + 9) es:",
+  choices: [
+    "3sec(θ)",
+    "3cos(θ)",
+    "3sin(θ)",
+    "3tan(θ)"
+  ],
+  correctIndex: 0,
+  solution: `x = 3tan(θ)
+
+√(9 + x²) = 3sec(θ)`,
+},
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Para ∫ dx / √(x² − 49), la sustitución es:",
+  choices: [
+    "x = 7sec(θ)",
+    "x = 7tan(θ)",
+    "x = 7sin(θ)",
+    "x = 7cos(θ)"
+  ],
+  correctIndex: 0,
+  solution: `Forma:
+√(x² − a²)
+
+Sustitución:
+x = a·sec(θ)`,
+},
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Si x = 3tan(θ), entonces θ es:",
+  choices: [
+    "arctan(x/3)",
+    "arcsin(x/3)",
+    "arcsec(x/3)",
+    "arccos(x/3)"
+  ],
+  correctIndex: 0,
+  solution: `x = 3tan(θ)
+
+tan(θ) = x/3
+
+θ = arctan(x/3)`,
+},
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Para √(x² + 4), usando sustitución correcta, se convierte en:",
+  choices: [
+    "2sec(θ)",
+    "2cos(θ)",
+    "2sin(θ)",
+    "2tan(θ)"
+  ],
+  correctIndex: 0,
+  solution: `x = 2tan(θ)
+
+√(x² + 4) = 2sec(θ)`,
+},
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Si x = 5sec(θ), entonces √(x² − 25) es:",
+  choices: [
+    "5tan(θ)",
+    "5cos(θ)",
+    "5sin(θ)",
+    "5sec(θ)"
+  ],
+  correctIndex: 0,
+  solution: `x = 5sec(θ)
+
+√(x² − 25) = 5tan(θ)`,
+},
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Para ∫ dx / (x² + 4), el resultado es:",
+  choices: [
+    "(1/2)arctan(x/2) + C",
+    "ln(x² + 4) + C",
+    "arcsin(x/2) + C",
+    "1/(x + 2) + C"
+  ],
+  correctIndex: 0,
+  solution: `Integral tipo:
+1/(x² + a²)
+
+Resultado:
+(1/a)arctan(x/a) + C`,
+},
+
+// --- Difícil (15–20) ---
+{
+  topic: "Sustitución trigonométrica (Difícil)",
+  q: "Calcula: ∫ √(x² − 9) dx",
+  choices: [
+    "(x/2)√(x² − 9) − (9/2)ln|x + √(x² − 9)| + C",
+    "√(x² − 9) + C",
+    "ln(x² − 9) + C",
+    "arccos(3/x) + C"
+  ],
+  correctIndex: 0,
+  solution: `Paso 1:
+x = 3sec(θ)
 
 Paso 2:
-√(9 − x²) = 3cos(θ)`,
-  },
+Convertir integral
 
-  // --- Media (21–25) ---
-  {
-    topic: "Sustitución trigonométrica (Media)",
-    q: "Calcula: ∫ √(9 − x²) dx",
-    choices: [
-      "(x/2)√(9 − x²) + (9/2)arcsin(x/3) + C",
-      "√(9 − x²) + C",
-      "arcsin(x/3) + C",
-      "x√(9 − x²) + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1:
-x = 3sin(θ)
+Paso 3:
+Regresar a x
 
-Paso 2: Convertir toda la integral
+Resultado final:
+(x/2)√(x² − 9) − (9/2)ln|x + √(x² − 9)| + C`,
+},
+{
+  topic: "Sustitución trigonométrica (Difícil)",
+  q: "Si x = 2sin(θ), entonces cos(θ) es:",
+  choices: [
+    "√(4 − x²)/2",
+    "x/2",
+    "√(x² − 4)/2",
+    "2/√(4 − x²)"
+  ],
+  correctIndex: 0,
+  solution: `sin(θ) = x/2
 
-Paso 3: Integrar y volver a x
+cos(θ) = √(1 − sin²(θ))
 
-Resultado:
-(x/2)√(9 − x²) + (9/2)arcsin(x/3) + C`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Media)",
-    q: "Calcula: ∫ dx / √(x² + 16)",
-    choices: [
-      "ln|x + √(x² + 16)| + C",
-      "arcsin(x/4) + C",
-      "√(x² + 16) + C",
-      "tan(x/4) + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1:
-x = 4tan(θ)
+= √(4 − x²)/2`,
+},
+{
+  topic: "Sustitución trigonométrica (Difícil)",
+  q: "Si x = 4sec(θ), entonces dx es:",
+  choices: [
+    "4sec(θ)tan(θ)dθ",
+    "4tan(θ)dθ",
+    "4sec²(θ)dθ",
+    "4cos(θ)dθ"
+  ],
+  correctIndex: 0,
+  solution: `Derivar:
+dx = 4sec(θ)tan(θ)dθ`,
+},
+{
+  topic: "Sustitución trigonométrica (Difícil)",
+  q: "Para √(2− x²), la función trigonométrica asociada es:",
+  choices: [
+    "sin(θ)",
+    "tan(θ)",
+    "sec(θ)",
+    "cot(θ)"
+  ],
+  correctIndex: 0,
+  solution: `Relación:
+sin(θ) = x/a`,
+},
+{
+  topic: "Sustitución trigonométrica (Difícil)",
+  q: "¿Cuál es el paso final después de integrar en θ?",
+  choices: [
+    "Regresar a la variable x",
+    "Derivar el resultado",
+    "Simplificar logaritmos",
+    "Aplicar integración por partes"
+  ],
+  correctIndex: 0,
+  solution: `Siempre el último paso es:
+Volver a la variable original x`,
+},
+// ===============================
+// NUEVAS 10 — Potencias trigonométricas
+// ===============================
 
-Paso 2:
-dx = 4sec²(θ)dθ
+// --- Fácil (1–4) ---
+{
+  topic: "Potencias trigonométricas (Fácil)",
+  q: "La identidad correcta para resolver ∫ sin²(x) dx es:",
+  choices: [
+    "sin²(x) = (1 − cos(2x))/2",
+    "sin²(x) = 1 − cos²(x)",
+    "sin²(x) = tan²(x) + 1",
+    "sin²(x) = sec²(x) − 1"
+  ],
+  correctIndex: 0,
+  solution: `Usar identidad de ángulo doble:
+sin²(x) = (1 − cos(2x))/2`,
+},
+{
+  topic: "Potencias trigonométricas (Fácil)",
+  q: "La identidad correcta para ∫ cos²(x) dx es:",
+  choices: [
+    "cos²(x) = (1 + cos(2x))/2",
+    "cos²(x) = 1 − sin²(x)",
+    "cos²(x) = sec²(x) − 1",
+    "cos²(x) = tan²(x) + 1"
+  ],
+  correctIndex: 0,
+  solution: `Identidad de ángulo doble:
+cos²(x) = (1 + cos(2x))/2`,
+},
+{
+  topic: "Potencias trigonométricas (Fácil)",
+  q: "Para simplificar tan²(x) en una integral se usa:",
+  choices: [
+    "tan²(x) = sec²(x) − 1",
+    "tan²(x) = 1 − sec²(x)",
+    "tan²(x) = sec²(x) + 1",
+    "tan²(x) = sin²(x)"
+  ],
+  correctIndex: 0,
+  solution: `Identidad pitagórica:
+1 + tan²(x) = sec²(x)
 
-Paso 3: Integrar
-∫ sec(θ)dθ
+Entonces:
+tan²(x) = sec²(x) − 1`,
+},
+{
+  topic: "Potencias trigonométricas (Fácil)",
+  q: "Para simplificar sec²(x) − 1 se obtiene:",
+  choices: [
+    "tan²(x)",
+    "sin²(x)",
+    "cos²(x)",
+    "cot²(x)"
+  ],
+  correctIndex: 0,
+  solution: `Identidad:
+sec²(x) − 1 = tan²(x)`,
+},
 
-Resultado:
-ln|x + √(x² + 16)| + C`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Media)",
-    q: "Si x = 4tan(θ), entonces √(x² + 16) es:",
-    choices: [
-      "4sec(θ)",
-      "4cos(θ)",
-      "4sin(θ)",
-      "4tan(θ)",
-    ],
-    correctIndex: 0,
-    solution: `Resultado:
-4sec(θ)`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Media)",
-    q: "Calcula: ∫ dx / (x² + 9)",
-    choices: [
-      "(1/3)arctan(x/3) + C",
-      "ln(x² + 9) + C",
-      "arcsin(x/3) + C",
-      "1/(x + 3) + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1:
-x = 3tan(θ)
+// --- Media (5–7) ---
+{
+  topic: "Potencias trigonométricas (Media)",
+  q: "Para ∫ sin⁴(x) dx, el primer paso es:",
+  choices: [
+    "Reescribir sin⁴(x) como (sin²(x))²",
+    "Separar un sin(x)",
+    "Aplicar sustitución",
+    "Derivar seno"
+  ],
+  correctIndex: 0,
+  solution: `sin⁴(x) = (sin²(x))²
 
-Paso 2: Integrar
-(1/3)arctan(x/3) + C`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Media)",
-    q: "¿Qué identidad se usa con x = a·tan(θ)?",
-    choices: [
-      "1 + tan²(θ) = sec²(θ)",
-      "1 − sin²(θ) = cos²(θ)",
-      "sin²(θ) + cos²(θ) = 1",
-      "1 − cos²(θ) = sin²(θ)",
-    ],
-    correctIndex: 0,
-    solution: `Identidad usada con tan:
-1 + tan²(θ) = sec²(θ)`,
-  },
+Luego aplicar:
+sin²(x) = (1 − cos(2x))/2`,
+},
+{
+  topic: "Potencias trigonométricas (Media)",
+  q: "Para ∫ cos⁴(x) dx, se usa:",
+  choices: [
+    "cos⁴(x) = (cos²(x))²",
+    "Separar un cos(x)",
+    "u = cos(x)",
+    "Integración por partes"
+  ],
+  correctIndex: 0,
+  solution: `cos⁴(x) = (cos²(x))²
 
-  // --- Difícil (26–30) ---
-  {
-    topic: "Sustitución trigonométrica (Difícil)",
-    q: "Calcula: ∫ √(x² − 16) dx",
-    choices: [
-      "(x/2)√(x² − 16) − 8 ln|x + √(x² − 16)| + C",
-      "√(x² − 16) + C",
-      "ln(x² − 16) + C",
-      "arccos(4/x) + C",
-    ],
-    correctIndex: 0,
-    solution: `Paso 1:
-x = 4sec(θ)
+Luego:
+cos²(x) = (1 + cos(2x))/2`,
+},
+{
+  topic: "Potencias trigonométricas (Media)",
+  q: "Para simplificar 1 − sin²(x) se obtiene:",
+  choices: [
+    "cos²(x)",
+    "sec²(x)",
+    "tan²(x)",
+    "cot²(x)"
+  ],
+  correctIndex: 0,
+  solution: `Identidad fundamental:
+sin²(x) + cos²(x) = 1
 
-Paso 2: Convertir integral
+Entonces:
+1 − sin²(x) = cos²(x)`,
+},
 
-Paso 3: Integrar y volver a x
+// --- Difícil (8–10) ---
+{
+  topic: "Potencias trigonométricas (Difícil)",
+  q: "Para ∫ sin²(x)cos²(x) dx, el primer paso es:",
+  choices: [
+    "Convertir ambas usando identidades de ángulo doble",
+    "Separar un seno",
+    "Sustituir u = sin(x)",
+    "Integración por partes"
+  ],
+  correctIndex: 0,
+  solution: `Ambas potencias son pares.
 
-Resultado:
-(x/2)√(x² − 16) − 8 ln|x + √(x² − 16)| + C`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Difícil)",
-    q: "Para x = 4sec(θ), dx es:",
-    choices: [
-      "4sec(θ)tan(θ)dθ",
-      "4tan(θ)dθ",
-      "4sec²(θ)dθ",
-      "4cos(θ)dθ",
-    ],
-    correctIndex: 0,
-    solution: `dx = 4sec(θ)tan(θ)dθ`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Difícil)",
-    q: "√(x² − a²) usando x = a·sec(θ) se convierte en:",
-    choices: [
-      "a·tan(θ)",
-      "a·cos(θ)",
-      "a·sin(θ)",
-      "a·sec(θ)",
-    ],
-    correctIndex: 0,
-    solution: `√(x² − a²) con sec:
-a·tan(θ)`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Difícil)",
-    q: "¿Cuál es el paso final tras integrar en θ?",
-    choices: [
-      "Regresar a la variable x",
-      "Derivar el resultado",
-      "Simplificar trigonometría",
-      "Aplicar integración por partes",
-    ],
-    correctIndex: 0,
-    solution: `Último paso de sustitución:
-Volver a la variable x`,
-  },
-  {
-    topic: "Sustitución trigonométrica (Difícil)",
-    q: "¿Por qué se usan sustituciones trigonométricas?",
-    choices: [
-      "Para eliminar raíces cuadradas",
-      "Para reducir potencias",
-      "Para integrar polinomios",
-      "Para evitar constantes",
-    ],
-    correctIndex: 0,
-    solution: `Objetivo de la sustitución trigonométrica:
-Eliminar raíces cuadradas y simplificar la integral`,
-  },
+Usar:
+sin²(x) = (1 − cos(2x))/2
+cos²(x) = (1 + cos(2x))/2`,
+},
+{
+  topic: "Potencias trigonométricas (Difícil)",
+  q: "Para reescribir tan²(x)sec²(x) sin sustitución se usa:",
+  choices: [
+    "tan²(x) = sec²(x) − 1",
+    "sec²(x) = tan²(x) − 1",
+    "tan²(x) = 1 − sec²(x)",
+    "sin²(x) = 1 − cos²(x)"
+  ],
+  correctIndex: 0,
+  solution: `Reemplazar:
+tan²(x) por sec²(x) − 1`,
+},
+{
+  topic: "Potencias trigonométricas (Difícil)",
+  q: "Para ∫ cos⁶(x) dx, la estrategia es:",
+  choices: [
+    "Aplicar identidad de ángulo doble repetidamente",
+    "Separar un cos(x)",
+    "Sustituir u",
+    "Integración por partes"
+  ],
+  correctIndex: 0,
+  solution: `Si la potencia es par:
+
+Reescribir:
+cos⁶(x) = (cos²(x))³
+
+Luego aplicar:
+cos²(x) = (1 + cos(2x))/2`,
+},
+// ===============================
+// NUEVAS 10 — Sustitución trigonométrica (Conceptual completa)
+// ===============================
+
+// --- Fácil (1–3) ---
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "Para ∫ dx / √(25 − x²), ¿cuál es el valor de a en la sustitución trigonométrica?",
+  choices: [
+    "5",
+    "25",
+    "√25",
+    "1"
+  ],
+  correctIndex: 0,
+  solution: `Forma:
+√(a² − x²)
+
+Aquí:
+a² = 25
+Entonces:
+a = 5`,
+},
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "Para ∫ √(x² − 16) dx, ¿qué caso corresponde?",
+  choices: [
+    "Caso x² − a²",
+    "Caso a² − x²",
+    "Caso a² + x²",
+    "Ninguno"
+  ],
+  correctIndex: 0,
+  solution: `La forma es:
+√(x² − a²)
+
+Es el caso:
+x² − a²`,
+},
+{
+  topic: "Sustitución trigonométrica (Fácil)",
+  q: "En el caso √(a² + x²), la función trigonométrica asociada es:",
+  choices: [
+    "tan(θ)",
+    "sin(θ)",
+    "sec(θ)",
+    "cos(θ)"
+  ],
+  correctIndex: 0,
+  solution: `Para:
+√(a² + x²)
+
+Se usa:
+x = a·tan(θ)`,
+},
+
+// --- Media (4–7) ---
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Para ∫ dx / √(x² − 9), si sec(θ) = x/3, entonces tan(θ) es:",
+  choices: [
+    "√(x² − 9)/3",
+    "x/3",
+    "3/√(x² − 9)",
+    "√(9 − x²)/3"
+  ],
+  correctIndex: 0,
+  solution: `sec(θ) = x/3
+
+Triángulo:
+tan(θ) = √(x² − 9)/3`,
+},
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Para ∫ √(36 − x²) dx, si sin(θ) = x/6, entonces cos(θ) es:",
+  choices: [
+    "√(36 − x²)/6",
+    "x/6",
+    "√(x² − 36)/6",
+    "6/√(36 − x²)"
+  ],
+  correctIndex: 0,
+  solution: `sin(θ) = x/6
+
+cos(θ) = √(1 − sin²(θ))
+
+= √(36 − x²)/6`,
+},
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Para ∫ dx / (x² + 4), si tan(θ) = x/2, entonces sec(θ) es:",
+  choices: [
+    "√(x² + 4)/2",
+    "x/2",
+    "2/√(x² + 4)",
+    "√(4 − x²)/2"
+  ],
+  correctIndex: 0,
+  solution: `tan(θ) = x/2
+
+sec(θ) = √(1 + tan²(θ))
+
+= √(x² + 4)/2`,
+},
+{
+  topic: "Sustitución trigonométrica (Media)",
+  q: "Para ∫ √(49 − x²) dx, ¿cuál es dx si x = 7sin(θ)?",
+  choices: [
+    "7cos(θ)dθ",
+    "7sin(θ)dθ",
+    "cos(θ)dθ",
+    "7sec(θ)dθ"
+  ],
+  correctIndex: 0,
+  solution: `x = 7sin(θ)
+
+dx = 7cos(θ)dθ`,
+},
+
+// --- Difícil (8–10) ---
+{
+  topic: "Sustitución trigonométrica (Difícil)",
+  q: "Para ∫ dx / √(x² − 25), ¿cuál es θ en términos de x?",
+  choices: [
+    "arcsec(x/5)",
+    "arcsin(x/5)",
+    "arctan(x/5)",
+    "arccos(x/5)"
+  ],
+  correctIndex: 0,
+  solution: `Caso:
+x = 5sec(θ)
+
+Entonces:
+sec(θ) = x/5
+
+θ = arcsec(x/5)`,
+},
+{
+  topic: "Sustitución trigonométrica (Difícil)",
+  q: "Para ∫ √(16 + x²) dx, si x = 4tan(θ), entonces √(16 + x²) se convierte en:",
+  choices: [
+    "4sec(θ)",
+    "4tan(θ)",
+    "4sin(θ)",
+    "4cos(θ)"
+  ],
+  correctIndex: 0,
+  solution: `x = 4tan(θ)
+
+√(16 + x²)
+= 4sec(θ)`,
+},
+{
+  topic: "Sustitución trigonométrica (Difícil)",
+  q: "En el caso √(a² − x²), ¿cuál es la identidad clave que elimina la raíz?",
+  choices: [
+    "1 − sin²(θ) = cos²(θ)",
+    "1 + tan²(θ) = sec²(θ)",
+    "sec²(θ) − 1 = tan²(θ)",
+    "sin²(θ) + tan²(θ) = 1"
+  ],
+  correctIndex: 0,
+  solution: `Caso:
+x = a·sin(θ)
+
+Identidad:
+1 − sin²(θ) = cos²(θ)`,
+},
+
+
+
 ];
 
 
