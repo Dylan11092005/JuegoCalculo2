@@ -478,7 +478,7 @@ cos²(x) = (1 + cos(2x))/2`,
 // --- Fácil (1–3) ---
 {
   topic: "Sustitución trigonométrica (Fácil)",
-  q: "Para ∫ dx / √(25 − x²), ¿cuál es el valor de a en la sustitución trigonométrica?",
+  q: "Para ∫ dx / √(25 − x²), ¿cuál es el valor de (a) en la sustitución trigonométrica?",
   choices: [
     "5",
     "25",
