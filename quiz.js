@@ -498,9 +498,9 @@ a = 5`,
   topic: "Sustitución trigonométrica (Fácil)",
   q: "Para ∫ √(x² − 16) dx, ¿qué caso corresponde?",
   choices: [
-    "Caso x² − a²",
-    "Caso a² − x²",
-    "Caso a² + x²",
+    "Caso 1",
+    "Caso 2",
+    "Caso 3",
     "Ninguno"
   ],
   correctIndex: 0,
