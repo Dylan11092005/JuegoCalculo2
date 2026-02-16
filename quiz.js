@@ -503,12 +503,12 @@ a = 5`,
     "Caso 3",
     "Ninguno"
   ],
-  correctIndex: 0,
+  correctIndex: 2,
   solution: `La forma es:
 √(x² − a²)
 
 Es el caso:
-x² − a²`,
+Caso 3`,
 },
 {
   topic: "Sustitución trigonométrica (Fácil)",
@@ -650,12 +650,15 @@ let quizActive = false;
 let currentQuestion = null;
 let locked = false;
 let bodyOverflowBackup = "";
+let questionCounter = 0; // Contador de preguntas
 
 window.startQuiz = function startQuiz(onResult) {
   if (quizActive) return;
 
   quizActive = true;
   locked = false;
+  questionCounter++; // Incrementar contador
+  
   currentQuestion = QUESTION_BANK[Math.floor(Math.random() * QUESTION_BANK.length)];
 
   // Mezclar opciones aleatoriamente
@@ -673,6 +676,10 @@ window.startQuiz = function startQuiz(onResult) {
   const qEl = document.getElementById("quizQ");
   const choicesEl = document.getElementById("quizChoices");
   const feedbackEl = document.getElementById("quizFeedback");
+  const timerEl = document.getElementById("quizTimer");
+  
+  // Actualizar el contador de preguntas
+  if (timerEl) timerEl.textContent = String(questionCounter);
 
   // Reset UI
   feedbackEl.textContent = "";
