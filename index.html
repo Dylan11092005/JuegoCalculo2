@@ -59,17 +59,36 @@
     .title {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 6px;
     }
 
     .title b {
-      font-size: 14px;
-      letter-spacing: .2px;
+      font-size: 20px;
+      font-weight: 950;
+      letter-spacing: .8px;
+      background: linear-gradient(135deg, #a7d751 0%, #64a600 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     .title span {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .3px;
     }
 
     .pill {
@@ -290,8 +309,7 @@
     <div class="card">
       <div class="topbar">
         <div class="title">
-          <b>Snake • Cálculo 2</b>
-          <span>Crece solo si respondes bien</span>
+          <b>🐍 SnakenityMath</b>
         </div>
         <div class="pill">
           <span>Puntaje:</span> <span id="scoreUI">0</span>
